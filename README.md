@@ -2,4 +2,10 @@
 
 ## Available Platforms
 
-- iOS
+### iOS
+
+**Available on Cocoapods:**
+
+```
+pod 'SiroSDK'
+```
