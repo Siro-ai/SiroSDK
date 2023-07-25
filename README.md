@@ -120,14 +120,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 }
 ```
-### 5. Initialize SiroKit in the root view controller
+### 5. Initialize SiroKit in the root view controller, and add SiroKitUI as a child view, and update protocol to HostingParentController
 
 ```swift
 import UIKit
 import SwiftUI
 import SiroKit
 
-class ViewController: UIViewController {
+class ViewController: HostingParentController { // <-- Change from UIViewController to HostingParentController
 
     /** Initialize the siroSDKUI. 
         SiroKitUI parameters allow you to customize appearance of the recording button.
