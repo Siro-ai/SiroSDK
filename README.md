@@ -3,12 +3,13 @@
 SiroSDK allows your users to create Siro recordings without navigating out of your app.
 
 ## Overview
+
 Siro SDK allows you to display a recording button. It also exposes an API to control recordings as a byproduct of existing interactions in your app, making the recording experience automatic to the end user.
 
-
 ## Requirements
- - Requires iOS 15+
- - Compatible with UIKit and SwiftUI
+
+- Requires iOS 15+
+- Compatible with UIKit and SwiftUI
 
 ## Swift UI Installation
 
@@ -19,28 +20,31 @@ pod 'SiroSDK'
 ```
 
 ### 2. Add the following keys to the Info.plist:
+
 - Privacy - Location When In Use Usage Description
 - Privacy - Microphone Usage Description
-![Screenshot](ios/docs/info-plist.png)
+  ![Screenshot](ios/docs/info-plist.png)
 
 ### 3. Ensure background audio recording is enabled
+
 - Signing & Capabilities -> Background Modes -> check Audio, AirPlay, and Picture in Picture
 
 ![Screenshot](ios/docs/background_modes.png)
 
 ### 4. Call `setup()` and `handleAppWillTerminate()` within app entry point
 
-Example App Entry Point (e.g., SiroKitExampleApp.swift)
+Example App Entry Point (e.g., SiroSDKExampleApp.swift)
+
 ```swift
-import SiroKit
+import SiroSDK
 import SwiftUI
 
 @main
-struct SiroKitExampleApp: App {
+struct SiroSDKExampleApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     init() {
-        // For staging, use SiroKit.setup(environment: .staging)
-        SiroKit.setup()  // <--- Add This
+        // For staging, use SiroSDK.setup(environment: .staging)
+        SiroSDK.setup()  // <--- Add This
     }
 
     var body: some Scene {
@@ -53,34 +57,34 @@ struct SiroKitExampleApp: App {
 // Add the App Delegate if it doesn't already exist
 class AppDelegate: NSObject, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
-        SiroKit.handleAppWillTerminate() // <--- insert this to stop recordings in progress when the app is about to terminate
+        SiroSDK.handleAppWillTerminate() // <--- insert this to stop recordings in progress when the app is about to terminate
     }
 }
 
 ```
 
-### 5. Insert SiroKit into your root View in a ZStack
+### 5. Insert SiroSDK into your root View in a ZStack
 
 Root View (e.g., ContentView.swift)
 
 ```swift
-import SiroKit
+import SiroSDK
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
         ZStack {
-          
+
           /** Your UI Here */
 
-          /** Initialize the SiroSDKUI. 
-            * SiroKitUI parameters allow you to customize appearance of the recording button.
+          /** Initialize the SiroSDKUI.
+            * SiroSDKUI parameters allow you to customize appearance of the recording button.
             * buttonRadius: CGFloat - radius of the recording button
             * buttonBottomPadding: CGFloat - space below the recording button
             * buttonTrailingPadding: CGFloat - space to the right of the recording button
-          
+
           */
-          SiroKitUI(buttonRadius: CGFloat, buttonBottomPadding: CGFloat, buttonTrailingPadding: CGFloat)
+          SiroSDKUI(buttonRadius: CGFloat, buttonBottomPadding: CGFloat, buttonTrailingPadding: CGFloat)
         }
     }
 }
@@ -95,20 +99,22 @@ pod 'SiroSDK'
 ```
 
 ### 2. Add the following keys to the Info.plist:
+
 - Privacy - Location When In Use Usage Description
 - Privacy - Microphone Usage Description
-![Screenshot](ios/docs/info-plist.png)
+  ![Screenshot](ios/docs/info-plist.png)
 
 ### 3. Ensure background audio recording is enabled
+
 - Signing & Capabilities -> Background Modes -> check Audio, AirPlay, and Picture in Picture
 
 ![Screenshot](ios/docs/background_modes.png)
 
-### 4. Add  `handleAppWillTerminate()` within `ApplicationWillTerminate` in the AppDelegate.swift
+### 4. Add `handleAppWillTerminate()` within `ApplicationWillTerminate` in the AppDelegate.swift
 
 ```swift
 import UIKit
-import SiroKit
+import SiroSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -116,43 +122,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   /** Your AppDelegate code */
 
   func applicationWillTerminate(_ application: UIApplication) {
-      SiroKit.handleAppWillTerminate() // <--- insert this to stop recordings in progress when the app is about to terminate
+      SiroSDK.handleAppWillTerminate() // <--- insert this to stop recordings in progress when the app is about to terminate
   }
 }
 ```
-### 5. Initialize SiroKit in the root view controller, and add SiroKitUI as a child view, and update protocol to HostingParentController
+
+### 5. Initialize SiroSDK in the root view controller, and add SiroSDKUI as a child view, and update protocol to HostingParentController
 
 ```swift
 import UIKit
 import SwiftUI
-import SiroKit
+import SiroSDK
 
 class ViewController: HostingParentController { // <-- Change from UIViewController to HostingParentController
 
-    /** Initialize the siroSDKUI. 
-        SiroKitUI parameters allow you to customize appearance of the recording button.
+    /** Initialize the siroSDKUI.
+        SiroSDKUI parameters allow you to customize appearance of the recording button.
         buttonRadius: CGFloat - radius of the recording button
         buttonBottomPadding: CGFloat - space below the recording button
         buttonTrailingPadding: CGFloat - space to the right of the recording button
      */
-    let siroSDKUI = UIHostingController(rootView: SiroKitUI(buttonRadius: CGFloat, buttonBottomPadding: CGFloat, buttonTrailingPadding: CGFloat))
+    let siroSDKUI = SiroSDKUI(buttonRadius: CGFloat, buttonBottomPadding: CGFloat, buttonTrailingPadding: CGFloat).uiView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // For staging, use SiroKit.setup(environment: .staging)
-        SiroKit.setup()
-        siroSDKUI.view.frame = view.bounds
-        siroSDKUI.view.translatesAutoresizingMaskIntoConstraints = false
-        siroSDKUI.view.backgroundColor = .clear
-        addChild(siroSDKUI)
+        // For staging, use SiroSDK.setup(environment: .staging)
+        SiroSDK.setup()
+        siroSDKUI.frame = view.bounds
+        siroSDKUI.translatesAutoresizingMaskIntoConstraints = false
+        siroSDKUI.backgroundColor = .clear
+
         view.addSubview(siroSDKUI.view)
         NSLayoutConstraint.activate([
-            siroSDKUI.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            siroSDKUI.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            siroSDKUI.view.topAnchor.constraint(equalTo: view.topAnchor),
-            siroSDKUI.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            siroSDKUI.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            siroSDKUI.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            siroSDKUI.topAnchor.constraint(equalTo: view.topAnchor),
+            siroSDKUI.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        siroSDKUI.didMove(toParent: self)
 
 
         /** Your App UI goes here */
@@ -165,18 +171,28 @@ class ViewController: HostingParentController { // <-- Change from UIViewControl
 
 ## Usage & Customization
 
-### Change record button position & size
+You can use the provided methods below to control your app's interaction with the SiroSDK. However, the SiroSDK includes an [opinionated button](###Included-Button) that can be immediatly used with minimal setup. Learn more in the Included Button section.
 
+### Toggle Recording View
 
+The recording view can be toggled using the following methods:
+
+```swift
+SiroSDK.show() // Shows Recording Bottom Sheet
+SiroSDK.hide() // Hides Recording Bottom Sheet
+```
 
 ### Trigger recording
+
 ```swift
-SiroKit.startRecording() // Start recording
-SiroKit.stopRecording() // Stop recording
+SiroSDK.startRecording() // Start recording
+SiroSDK.stopRecording() // Stop recording
 ```
 
 ### Read recording status
-`SiroKit.recordingStatus: SKRecorderState` is an enum with the current recording status. It can be one of the following:
+
+`SiroSDK.recordingStatus: SKRecorderState` is an enum with the current recording status. It can be one of the following:
+
 ```swift
 public enum SKRecorderState {
     case paused
@@ -187,10 +203,43 @@ public enum SKRecorderState {
 ```
 
 ### Send events
+
 Allows Siro SDK to respond to custom events, making recording automatic to the end user.
 
-Siro SDK must be initialized, otherwise events will be ignored. Check `SiroKit.initialized` for the current initialization status.
+Siro SDK must be initialized, otherwise events will be ignored. Check `SiroSDK.initialized` for the current initialization status.
 
 ```swift
-SiroKit.sendEvent(_ eventName: String)
+SiroSDK.sendEvent(_ eventName: String)
+```
+
+### Included Button
+
+The SiroSDK provides a opinioned button that can be added to you app to quickly integrate with the SiroSDK.
+
+#### SwiftUI Usage
+
+```swift
+HStack {
+	Spacer()
+	VStack {
+		Spacer()
+ 		// optional buttonRadius - defaults to 30
+		SiroSDKButton(buttonRadius: CGFloat)
+	}
+}
+```
+
+#### UIKit Usage
+
+```swift
+// optional buttonRadius - defaults to 30
+let siroSDKButton = SiroSDKButton(buttonRadius: CGFloat).uiView()
+siroSDKButton.translatesAutoresizingMaskIntoConstraints = false
+view.addSubview(siroSDKButton)
+
+// Setup Constraints
+NSLayoutConstraint.activate([
+		siroSDKButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+		siroSDKButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
+])
 ```
