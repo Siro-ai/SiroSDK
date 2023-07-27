@@ -1,0 +1,257 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
+// swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name SiroSDK
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVFoundation
+import Accelerate
+import Combine
+import CoreGraphics
+import CoreLocation
+import FirebaseAuth
+import FirebaseCore
+import FirebaseDynamicLinks
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+import FirebaseStorage
+import Foundation
+import Network
+import QuartzCore
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+@_Concurrency.MainActor(unsafe) public struct SiroSDKUI : SwiftUI.View {
+  @_Concurrency.MainActor(unsafe) public init(buttonRadius: CoreFoundation.CGFloat = 30, buttonBottomPadding: CoreFoundation.CGFloat = 8, buttonTrailingPadding: CoreFoundation.CGFloat = 8)
+  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public func uiView() -> UIKit.UIView
+  public typealias Body = @_opaqueReturnTypeOf("$s7SiroSDK0A5SDKUIV4bodyQrvp", 0) __
+}
+extension BottomSheet {
+  public func enableSwipeToDismiss(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+}
+extension BottomSheet {
+  public func customAnimation(_ animation: SwiftUI.Animation?) -> BottomSheet<HContent, MContent, V>
+}
+extension BottomSheet {
+  public func customThreshold(_ threshold: Swift.Double) -> BottomSheet<HContent, MContent, V>
+}
+@_Concurrency.MainActor(unsafe) public struct SiroSDKButton : SwiftUI.View {
+  @_Concurrency.MainActor(unsafe) public init(buttonRadius: CoreFoundation.CGFloat = 30)
+  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public func uiView() -> UIKit.UIView
+  public typealias Body = @_opaqueReturnTypeOf("$s7SiroSDK0A9SDKButtonV4bodyQrvp", 0) __
+}
+public enum SKEnvironment {
+  case staging
+  case production
+  public static func == (a: SKEnvironment, b: SKEnvironment) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum BottomSheetPosition : Swift.Equatable {
+  case hidden
+  case dynamicBottom
+  case dynamic
+  case dynamicTop
+  case relativeBottom(CoreFoundation.CGFloat)
+  case relative(CoreFoundation.CGFloat)
+  case relativeTop(CoreFoundation.CGFloat)
+  case absoluteBottom(CoreFoundation.CGFloat)
+  case absolute(CoreFoundation.CGFloat)
+  case absoluteTop(CoreFoundation.CGFloat)
+  public static func == (a: BottomSheetPosition, b: BottomSheetPosition) -> Swift.Bool
+}
+extension BottomSheet {
+  public func onDismiss(_ perform: @escaping () -> Swift.Void) -> BottomSheet<HContent, MContent, V>
+}
+extension BottomSheet {
+  public func enableFlickThrough(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+}
+extension BottomSheet {
+  public func showCloseButton(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+}
+extension BottomSheet {
+  public func showDragIndicator(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+  public func dragIndicatorColor(_ color: SwiftUI.Color) -> BottomSheet<HContent, MContent, V>
+  public func dragIndicatorAction(_ action: @escaping (SwiftUI.GeometryProxy) -> Swift.Void) -> BottomSheet<HContent, MContent, V>
+}
+@available(iOS 15, macOS 12, *)
+extension BottomSheet {
+  public func customBackground(ignoresSafeAreaEdges edges: SwiftUI.Edge.Set = .all) -> BottomSheet<HContent, MContent, V>
+  public func customBackground<S>(in shape: S, fillStyle: SwiftUI.FillStyle = FillStyle()) -> BottomSheet<HContent, MContent, V> where S : SwiftUI.Shape
+  public func customBackground<S>(in shape: S, fillStyle: SwiftUI.FillStyle = FillStyle()) -> BottomSheet<HContent, MContent, V> where S : SwiftUI.InsettableShape
+}
+extension BottomSheet {
+  public func enableBackgroundBlur(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+  public func backgroundBlurMaterial(_ material: VisualEffect) -> BottomSheet<HContent, MContent, V>
+}
+extension BottomSheet {
+  public func enableTapToDismiss(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+}
+extension BottomSheet {
+  public func customBackground<Background>(_ background: Background, alignment: SwiftUI.Alignment = .center) -> BottomSheet<HContent, MContent, V> where Background : SwiftUI.View
+  public func customBackground<V>(alignment: SwiftUI.Alignment = .center, @SwiftUI.ViewBuilder content: () -> V) -> BottomSheet<HContent, MContent, V> where V : SwiftUI.View
+  public func customBackground<S>(_ style: S, ignoresSafeAreaEdges edges: SwiftUI.Edge.Set = .all) -> BottomSheet<HContent, MContent, V> where S : SwiftUI.ShapeStyle
+  public func customBackground<S, T>(_ style: S, in shape: T, fillStyle: SwiftUI.FillStyle = FillStyle()) -> BottomSheet<HContent, MContent, V> where S : SwiftUI.ShapeStyle, T : SwiftUI.Shape
+  public func customBackground<S, T>(_ style: S, in shape: T, fillStyle: SwiftUI.FillStyle = FillStyle()) -> BottomSheet<HContent, MContent, V> where S : SwiftUI.ShapeStyle, T : SwiftUI.InsettableShape
+}
+public struct SiroSDK {
+  public static var recordingStatus: SKRecorderState {
+    get
+  }
+  public static var initialized: Swift.Bool {
+    get
+  }
+  public static var visibile: Swift.Bool {
+    get
+  }
+  public static func setup(environment: SKEnvironment = .production)
+  public static func startRecording()
+  public static func stopRecording()
+  public static func sendEvent(_ eventName: Swift.String)
+  public static func handleAppWillTerminate()
+  public static func show()
+  public static func hide()
+}
+extension BottomSheet {
+  public func enableContentDrag(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+}
+extension BottomSheet {
+  public func enableAppleScrollBehavior(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+}
+public struct BottomSheet<HContent, MContent, V> : SwiftUI.View where HContent : SwiftUI.View, MContent : SwiftUI.View, V : SwiftUI.View {
+  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7SiroSDK11BottomSheetV4bodyQrvp", 0) __<HContent, MContent, V>
+}
+extension SwiftUI.View {
+  public func bottomSheet<HContent, MContent>(bottomSheetPosition: SwiftUI.Binding<BottomSheetPosition>, switchablePositions: [BottomSheetPosition], @SwiftUI.ViewBuilder headerContent: () -> HContent? = {
+            return nil
+        }, @SwiftUI.ViewBuilder mainContent: () -> MContent) -> BottomSheet<HContent, MContent, Self> where HContent : SwiftUI.View, MContent : SwiftUI.View
+  public typealias TitleContent = SwiftUI.ModifiedContent<SwiftUI.Text, SwiftUI._EnvironmentKeyWritingModifier<Swift.Int?>>
+  public func bottomSheet<MContent>(bottomSheetPosition: SwiftUI.Binding<BottomSheetPosition>, switchablePositions: [BottomSheetPosition], title: Swift.String? = nil, @SwiftUI.ViewBuilder content: () -> MContent) -> BottomSheet<Self.TitleContent, MContent, Self> where MContent : SwiftUI.View
+}
+public enum BottomSheetWidth : Swift.Equatable {
+  case platformDefault
+  case relative(CoreFoundation.CGFloat)
+  case absolute(CoreFoundation.CGFloat)
+  public static func == (a: BottomSheetWidth, b: BottomSheetWidth) -> Swift.Bool
+}
+extension BottomSheet {
+  public func enableAccountingForKeyboardHeight(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+}
+public enum SKRecorderState : Swift.String {
+  case paused
+  case stopped
+  case recording
+  case notStarted
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension SwiftUI.Color {
+  public static let siroYellow: SwiftUI.Color
+  public static let siroBlack: SwiftUI.Color
+}
+extension BottomSheet {
+  public func enableFloatingIPadSheet(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+}
+extension BottomSheet {
+  public func sheetWidth(_ width: BottomSheetWidth = .platformDefault) -> BottomSheet<HContent, MContent, V>
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class HostingParentController : UIKit.UIViewController {
+  @_Concurrency.MainActor(unsafe) public var makeBackgroundsClear: Swift.Bool
+  @_Concurrency.MainActor(unsafe) public var forwardBaseTouchesTo: UIKit.UIView?
+  @_Concurrency.MainActor(unsafe) public var ignoreTouchesOnSwiftUIScrollView: Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func loadView()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewWillLayoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class HostingParentView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) public var forwardBaseTouchesTo: UIKit.UIView?
+  @_Concurrency.MainActor(unsafe) public var makeBackgroundsClear: Swift.Bool
+  @_Concurrency.MainActor(unsafe) public var ignoreTouchesOnSwiftUIScrollView: Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func hitTest(_ point: CoreFoundation.CGPoint, with event: UIKit.UIEvent?) -> UIKit.UIView?
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension BottomSheet {
+  public func isResizable(_ bool: Swift.Bool = true) -> BottomSheet<HContent, MContent, V>
+}
+public enum VisualEffect : Swift.Equatable, Swift.Hashable {
+  public enum Material : Swift.Equatable, Swift.Hashable {
+    case `default`
+    @available(iOS 13.0, *)
+    @available(macOS, unavailable)
+    case ultraThin
+    @available(iOS 13.0, *)
+    @available(macOS, unavailable)
+    case thin
+    @available(iOS 13.0, *)
+    @available(macOS, unavailable)
+    case thick
+    @available(iOS 13.0, *)
+    @available(macOS, unavailable)
+    case chrome
+    @available(macOS 10.15, *)
+    @available(iOS, unavailable)
+    @available(macCatalyst, unavailable)
+    case titlebar
+    @available(macOS 10.15, *)
+    @available(iOS, unavailable)
+    @available(macCatalyst, unavailable)
+    case windowBackground
+    @available(macOS 10.15, *)
+    @available(iOS, unavailable)
+    @available(macCatalyst, unavailable)
+    case headerView(behindWindow: Swift.Bool)
+    @available(macOS 10.15, *)
+    @available(iOS, unavailable)
+    @available(macCatalyst, unavailable)
+    case contentBackground(behindWindow: Swift.Bool)
+    @available(macOS 10.15, *)
+    @available(iOS, unavailable)
+    @available(macCatalyst, unavailable)
+    case behindPageBackground(behindWindow: Swift.Bool)
+    public static func == (a: VisualEffect.Material, b: VisualEffect.Material) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  case system
+  case systemLight
+  case systemDark
+  case adaptive(VisualEffect.Material)
+  case light(VisualEffect.Material)
+  case dark(VisualEffect.Material)
+  public static func == (a: VisualEffect, b: VisualEffect) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension BottomSheet {
+  public func onDragChanged(_ perform: @escaping (SwiftUI.DragGesture.Value) -> Swift.Void) -> BottomSheet<HContent, MContent, V>
+  public func onDragEnded(_ perform: @escaping (SwiftUI.DragGesture.Value) -> Swift.Void) -> BottomSheet<HContent, MContent, V>
+  public func dragPositionSwitchAction(_ action: @escaping (SwiftUI.GeometryProxy, SwiftUI.DragGesture.Value) -> Swift.Void) -> BottomSheet<HContent, MContent, V>
+}
+extension SKEnvironment : Swift.Equatable {}
+extension SKEnvironment : Swift.Hashable {}
+extension SKRecorderState : Swift.Equatable {}
+extension SKRecorderState : Swift.Hashable {}
+extension SKRecorderState : Swift.RawRepresentable {}
