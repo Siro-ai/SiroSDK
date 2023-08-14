@@ -22,43 +22,43 @@
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		jfrLQWFYkWVl6EbDAouqKnhKJkg=
+		tMd8ZAowSWrS8MxWAwtr4G035lw=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		/yzJWOMVdvRrB6NXuM4I1KrEDMc=
+		FIfA4uQpZiENrElp7TtB9xosiYw=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		MIv8YKo6+O7AJKxpq1L0C5heTO8=
+		rzS8fw/mTH6EypHUnXHrNcjbeQc=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		/yzJWOMVdvRrB6NXuM4I1KrEDMc=
+		FIfA4uQpZiENrElp7TtB9xosiYw=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		UwfCU3oYq0eI4gBi71VLZm8Dv4o=
+		30zVckBAc9L+tdM6WSRtlUBFuQo=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		jfrLQWFYkWVl6EbDAouqKnhKJkg=
+		tMd8ZAowSWrS8MxWAwtr4G035lw=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		SMdaVQg00OJBanvC+5ypMTBXkNo=
+		PNihAXHUNpM+RiuRf+G845JpFlg=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		C0COaRnec/HuMiD8+hk5EvKcXEM=
+		sKj82OTJ+Vk1P6b8CPyNTNo6s+o=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		SMdaVQg00OJBanvC+5ypMTBXkNo=
+		PNihAXHUNpM+RiuRf+G845JpFlg=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		cwKEA2q/6kSypqHXzSZrdUcnRHY=
+		zLl7qd3/zfgeqWMETy69plko+/U=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -92,70 +92,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			gJGrsc+3uetGkrNISsDvZiMjqQcgpShOK+yPFuG/2SQ=
+			1hZdpVbMp8oqzH1M9z46eo9LCpxUHkhAcaly3W3Re5I=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VQXbYVzqu4rbbCAzfRlIqlxfMRu7NRPZPJU3UB7WZEU=
+			zfAB5MEOcoUCK8C5FOOcke1j8sNLnlg482xR8+MRJP8=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ew0oJwtptV4MnybWzHtWk4oJdqEF+sn7sM3oYMAXLh0=
+			Z374VAtbQTh5KzXqu+7LSSRHITgyNT4vAXarcMAbPxM=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VQXbYVzqu4rbbCAzfRlIqlxfMRu7NRPZPJU3UB7WZEU=
+			zfAB5MEOcoUCK8C5FOOcke1j8sNLnlg482xR8+MRJP8=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ww/1L8t/ksRqNPnhdDRBZmMzFuYm6uGyzADD1+LptgY=
+			PxgupOFDm/Sz5bR46gMjQFHsxXRzotjXf3sb3X44gg0=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gJGrsc+3uetGkrNISsDvZiMjqQcgpShOK+yPFuG/2SQ=
+			1hZdpVbMp8oqzH1M9z46eo9LCpxUHkhAcaly3W3Re5I=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			elH04Kf7D9jAUNTjDJavl86qrjkcGPjg/rlzMWRsOIw=
+			TzkvPHE71Sf40bQA7dnf2g25DPK+hvW+E0JuzMtuh4Q=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RJaXSvtRTX+aXpg/33qxiev2CwqGqbYGRs8xQ3uXK4s=
+			GQ9oAMgHohLoCLJKJaRdETcdWo6WaY8rgKnAfRepLvk=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			elH04Kf7D9jAUNTjDJavl86qrjkcGPjg/rlzMWRsOIw=
+			TzkvPHE71Sf40bQA7dnf2g25DPK+hvW+E0JuzMtuh4Q=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pN1aREXI4i4DK7h+QWnAhmnc0l9goo7NskhkX/+Nk6c=
+			5W/6KJuoJ35geQvEuuwXC0CtQNLEP0zFFELhpdSM3Kg=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
