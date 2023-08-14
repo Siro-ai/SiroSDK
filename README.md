@@ -153,12 +153,12 @@ public enum SKRecorderState {
 
 ### Send events
 
-Allows Siro SDK to respond to custom events, making recording automatic to the end user.
+Allows Siro SDK to respond to custom events, making recording automatic to the end user. These events can optionally include metadata of the `InteractionData` type.
 
 Siro SDK must be initialized, otherwise events will be ignored. Check `SiroSDK.initialized` for the current initialization status.
 
 ```swift
-SiroSDK.sendEvent(_ eventName: String)
+SiroSDK.sendEvent(_ eventName: String, interactionData: InteractionData?)
 ```
 
 ### Included Button
