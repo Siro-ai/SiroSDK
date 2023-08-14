@@ -63,7 +63,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 ```
 
-### 5. Insert SiroSDK into your root View in a ZStack
+### 5. Add the SiroSDK UI to your root view using the `.siroSDKUI()` method.
 
 Root View (e.g., ContentView.swift)
 
@@ -71,20 +71,11 @@ Root View (e.g., ContentView.swift)
 import SiroSDK
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        ZStack {
-
-          /** Your UI Here */
-
-          /** Initialize the SiroSDKUI.
-            * SiroSDKUI parameters allow you to customize appearance of the recording button.
-            * buttonRadius: CGFloat - radius of the recording button
-            * buttonBottomPadding: CGFloat - space below the recording button
-            * buttonTrailingPadding: CGFloat - space to the right of the recording button
-
-          */
-          SiroSDKUI(buttonRadius: CGFloat, buttonBottomPadding: CGFloat, buttonTrailingPadding: CGFloat)
+@main
+struct SiroSDKExampleApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView().siroSDKUI()
         }
     }
 }
@@ -125,48 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       SiroSDK.handleAppWillTerminate() // <--- insert this to stop recordings in progress when the app is about to terminate
   }
 }
-```
-
-### 5. Initialize SiroSDK in the root view controller, and add SiroSDKUI as a child view, and update protocol to HostingParentController
-
-```swift
-import UIKit
-import SwiftUI
-import SiroSDK
-
-class ViewController: HostingParentController { // <-- Change from UIViewController to HostingParentController
-
-    /** Initialize the siroSDKUI.
-        SiroSDKUI parameters allow you to customize appearance of the recording button.
-        buttonRadius: CGFloat - radius of the recording button
-        buttonBottomPadding: CGFloat - space below the recording button
-        buttonTrailingPadding: CGFloat - space to the right of the recording button
-     */
-    let siroSDKUI = SiroSDKUI(buttonRadius: CGFloat, buttonBottomPadding: CGFloat, buttonTrailingPadding: CGFloat).uiView()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // For staging, use SiroSDK.setup(environment: .staging)
-        SiroSDK.setup()
-        siroSDKUI.frame = view.bounds
-        siroSDKUI.translatesAutoresizingMaskIntoConstraints = false
-        siroSDKUI.backgroundColor = .clear
-
-        view.addSubview(siroSDKUI.view)
-        NSLayoutConstraint.activate([
-            siroSDKUI.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            siroSDKUI.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            siroSDKUI.topAnchor.constraint(equalTo: view.topAnchor),
-            siroSDKUI.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-
-
-        /** Your App UI goes here */
-
-        view.bringSubviewToFront(siroSDKUI.view)
-    }
-}
-
 ```
 
 ## Usage & Customization
