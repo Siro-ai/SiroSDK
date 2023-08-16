@@ -15,5 +15,4 @@ Pod::Spec.new do |s|
 	s.dependency 'FirebaseFirestore', '~> 10.12.0'
 	s.dependency 'FirebaseFirestoreSwift', '~> 10.12.0'
 	s.dependency 'FirebaseStorage', '~> 10.12.0'
-	s.dependency 'AnyCodable-FlightSchool', '~> 0.6.7'
 end
