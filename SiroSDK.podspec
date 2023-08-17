@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
 	s.homepage     					 = "https://siro.ai"
 	s.license 		 					 = { :type => 'Copyright', :text => "Copyright 2023 Siro.ai" }
 	s.author 			 					 = { "Siro.ai" => "hello@siro.ai" }
-	s.source 			 					 = { :git => "https://github.com/Siro-ai/SiroSDK.git", :tag => "1.3.0" }
+	s.source 			 					 = { :git => "https://github.com/Siro-ai/SiroSDK.git", :tag => "1.3.1" }
 	s.platform 		 					 = :ios
 	s.ios.deployment_target  = '15.0'
 	s.vendored_frameworks 	 = "ios/SiroSDK.xcframework"
