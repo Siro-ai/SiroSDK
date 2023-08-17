@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.7.1 (swiftlang-5.7.1.135.3 clang-1400.0.29.51)
+// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
 // swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name SiroSDK
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import AVFoundation
@@ -113,7 +113,7 @@ internal protocol _AnyEncodable {
 extension SiroSDK.AnyEncodable : SiroSDK._AnyEncodable {
 }
 extension SiroSDK._AnyEncodable {
-  public func encode(to encoder: Swift.Encoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
 }
 extension SiroSDK.AnyEncodable : Swift.Equatable {
   public static func == (lhs: SiroSDK.AnyEncodable, rhs: SiroSDK.AnyEncodable) -> Swift.Bool
@@ -186,7 +186,7 @@ internal protocol _AnyDecodable {
 extension SiroSDK.AnyDecodable : SiroSDK._AnyDecodable {
 }
 extension SiroSDK._AnyDecodable {
-  public init(from decoder: Swift.Decoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 extension SiroSDK.AnyDecodable : Swift.Equatable {
   public static func == (lhs: SiroSDK.AnyDecodable, rhs: SiroSDK.AnyDecodable) -> Swift.Bool
@@ -225,31 +225,32 @@ public struct SiroSDK {
   public static func handleAppWillTerminate()
   public static func show()
   public static func hide()
+  public static func logout()
 }
 public struct Contact {
   public init(firstName: Swift.String?, lastName: Swift.String?, email: Swift.String?, phoneNumber: Swift.String?)
-  public func encode(to encoder: Swift.Encoder) throws
-  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public struct Stage {
   public init(id: Swift.String, name: Swift.String?, color: Swift.String?, icon: Swift.String?, won: Swift.Bool?, interacted: Swift.Bool?)
-  public func encode(to encoder: Swift.Encoder) throws
-  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public struct Coordinates {
   public init(lat: Swift.Double, long: Swift.Double)
-  public func encode(to encoder: Swift.Encoder) throws
-  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public struct Address {
   public init(street: Swift.String, city: Swift.String, state: Swift.String, zip: Swift.String)
-  public func encode(to encoder: Swift.Encoder) throws
-  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public struct InteractionData {
   public init(id: Swift.String, leadId: Swift.String?, stage: SiroSDK.Stage?, coordinates: SiroSDK.Coordinates?, address: SiroSDK.Address?, note: Swift.String?, metadata: [Swift.String : SiroSDK.AnyCodable]?, contacts: [SiroSDK.Contact]?, owner: Swift.String?, recordingId: Swift.String?, leadCreatedAt: Foundation.Date?)
-  public func encode(to encoder: Swift.Encoder) throws
-  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
 }
 public enum SKRecorderState : Swift.String {
   case paused
