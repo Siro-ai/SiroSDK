@@ -161,6 +161,14 @@ Siro SDK must be initialized, otherwise events will be ignored. Check `SiroSDK.i
 SiroSDK.sendEvent(_ eventName: String, interactionData: InteractionData?)
 ```
 
+### Logout the Current User
+
+You can logout the current user using the following:
+
+```swift
+SiroSDK.logout()
+```
+
 ### Included Button
 
 The SiroSDK provides a opinioned button that can be added to you app to quickly integrate with the SiroSDK.
