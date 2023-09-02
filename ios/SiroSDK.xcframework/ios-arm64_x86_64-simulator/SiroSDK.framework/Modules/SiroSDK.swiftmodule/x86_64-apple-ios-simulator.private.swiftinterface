@@ -225,6 +225,7 @@ public struct SiroSDK {
   public static func handleAppWillTerminate()
   public static func show()
   public static func hide()
+  public static func logout()
 }
 public struct Contact {
   public init(firstName: Swift.String?, lastName: Swift.String?, email: Swift.String?, phoneNumber: Swift.String?)
@@ -247,7 +248,7 @@ public struct Address {
   public init(from decoder: Swift.Decoder) throws
 }
 public struct InteractionData {
-  public init(id: Swift.String, leadId: Swift.String?, stage: Stage?, coordinates: Coordinates?, address: Address?, note: Swift.String?, metadata: [Swift.String : AnyCodable]?, contacts: [Contact]?, owner: Swift.String?, recordingId: Swift.String?, leadCreatedAt: Foundation.Date?)
+  public init(id: Swift.String, userId: Swift.String?, leadId: Swift.String?, stage: Stage?, coordinates: Coordinates?, address: Address?, note: Swift.String?, metadata: [Swift.String : AnyCodable]?, contacts: [Contact]?, leadDateCreated: Foundation.Date?)
   public func encode(to encoder: Swift.Encoder) throws
   public init(from decoder: Swift.Decoder) throws
 }

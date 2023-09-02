@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 	s.name         					 = "SiroSDK"
-	s.version      					 = "1.3.1"
+	s.version      					 = "1.3.3"
 	s.summary      					 = "Pod for integrating Siro.ai into an iOS project"
 	s.homepage     					 = "https://siro.ai"
 	s.license 		 					 = { :type => 'Copyright', :text => "Copyright 2023 Siro.ai" }
