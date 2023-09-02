@@ -248,7 +248,7 @@ public struct Address {
   public init(from decoder: any Swift.Decoder) throws
 }
 public struct InteractionData {
-  public init(id: Swift.String, leadId: Swift.String?, stage: SiroSDK.Stage?, coordinates: SiroSDK.Coordinates?, address: SiroSDK.Address?, note: Swift.String?, metadata: [Swift.String : SiroSDK.AnyCodable]?, contacts: [SiroSDK.Contact]?, owner: Swift.String?, recordingId: Swift.String?, leadCreatedAt: Foundation.Date?)
+  public init(id: Swift.String, userId: Swift.String?, leadId: Swift.String?, stage: SiroSDK.Stage?, coordinates: SiroSDK.Coordinates?, address: SiroSDK.Address?, note: Swift.String?, metadata: [Swift.String : SiroSDK.AnyCodable]?, contacts: [SiroSDK.Contact]?, leadDateCreated: Foundation.Date?)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
