@@ -217,6 +217,7 @@ public struct SiroSDK {
   public static var visibile: Swift.Bool {
     get
   }
+  public static func isUserLoggedIn() -> Swift.Bool
   public static func setup(environment: SKEnvironment = .production)
   public static func startRecording()
   public static func requestRecordingPermissions()
