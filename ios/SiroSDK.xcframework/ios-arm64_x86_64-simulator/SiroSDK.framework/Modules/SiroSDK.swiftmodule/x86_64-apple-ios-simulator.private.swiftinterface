@@ -219,13 +219,11 @@ public struct SiroSDK {
   }
   public static func isUserLoggedIn() -> Swift.Bool
   public static func setup(environment: SKEnvironment = .production)
-  public static func startRecording()
   public static func requestRecordingPermissions()
-  public static func stopRecording()
   public static func sendEvent(_ eventName: Swift.String, interactionData: InteractionData?)
   public static func handleAppWillTerminate()
   public static func show()
-  public static func hide()
+  public static func hide(withDelay: Swift.Bool = true)
   public static func logout()
 }
 public struct Contact {
