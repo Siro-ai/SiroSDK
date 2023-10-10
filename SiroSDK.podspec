@@ -15,4 +15,5 @@ Pod::Spec.new do |s|
 	s.dependency 'FirebaseFirestore', '~> 10.12.0'
 	s.dependency 'FirebaseFirestoreSwift', '~> 10.12.0'
 	s.dependency 'FirebaseStorage', '~> 10.12.0'
+	s.dependency 'Mixpanel', '~> 4.1.4'
 end
