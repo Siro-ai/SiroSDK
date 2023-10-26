@@ -1,6 +1,6 @@
 # SiroSDK for iOS
 
-SiroSDK allows your users to create Siro recordings without navigating out of your app.
+SiroSDK allows your users to create Siro recordings without navigating out of your app [why](https://www.notion.so/siroai/The-SiroSDK-58b8730f1db842d28fcc171ccb8cd3b6?pvs=4)
 
 ## Overview
 
@@ -131,13 +131,6 @@ SiroSDK.show() // Shows Recording Bottom Sheet
 SiroSDK.hide() // Hides Recording Bottom Sheet
 ```
 
-### Trigger recording (Deprecated - See "Send Events" below)
-
-```swift
-SiroSDK.startRecording() // Start recording
-SiroSDK.stopRecording() // Stop recording
-```
-
 ### Read recording status
 
 `SiroSDK.recordingStatus: SKRecorderState` is an enum with the current recording status. It can be one of the following:
@@ -151,9 +144,13 @@ public enum SKRecorderState {
 }
 ```
 
-### Send events
+### Configure Events to Start and Stop Recording
 
-SiroSDK uses events to conduct an action (an action is starting, stopping, and/or pausing the recorder). Events allow for automatic recording, and can optionally include metadata of the `InteractionData` type. We currently support the events below, however if there are custom events you would like to add please feel free to reach out to chris@siro.ai.
+Send events to the SiroSDK to control the recorder (e.g., start recording, save recording, discard recording, save and start new recording).
+Different sales reps have different workflows, and events allow the flexibility for sales reps to customize their workflow.
+You send a string of something happening in your app (e.g., map opened or pin dropped), and the recorder will respond according to the user settings or default behavior (e.g., start a new recording).
+You can also include metadata with each event to improve the quality of analytics provided by Siro. Metadata is of the InteractionData type.
+We currently support the events below. If you’d like other events, please reach out to chris@siro.ai and we’ll get back to you same-day with the updates.
 
 Default Events and Actions:
 
@@ -178,7 +175,7 @@ SiroSDK.sendEvent(_ eventName: String, interactionData: InteractionData?)
 
 ### Logout the Current User
 
-You can logout the current user using the following:
+Users authenticate with the SDK using their Siro credentials. When the user logs out of your app, they should also be logged out of the SDK separately. You can logout the current user using the following:
 
 ```swift
 SiroSDK.logout()
