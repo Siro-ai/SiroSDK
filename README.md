@@ -63,7 +63,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 ```
 
-### 5. Add the SiroSDK UI to your root view using the `.siroSDKUI()` method.
+### 5. Add the SiroSDK UI to your root view using the `SiroSDKButton`.
 
 Root View (e.g., ContentView.swift)
 
@@ -75,7 +75,7 @@ import SwiftUI
 struct SiroSDKExampleApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView().siroSDKUI()
+            SiroSDKButton()
         }
     }
 }
@@ -131,7 +131,7 @@ SiroSDK.show() // Shows Recording Bottom Sheet
 SiroSDK.hide() // Hides Recording Bottom Sheet
 ```
 
-### Trigger recording
+### Trigger recording (Deprecated - See "Send Events" below)
 
 ```swift
 SiroSDK.startRecording() // Start recording
@@ -153,7 +153,22 @@ public enum SKRecorderState {
 
 ### Send events
 
-Allows Siro SDK to respond to custom events, making recording automatic to the end user. These events can optionally include metadata of the `InteractionData` type.
+SiroSDK uses events to conduct an action (an action is starting, stopping, and/or pausing the recorder). Events allow for automatic recording, and can optionally include metadata of the `InteractionData` type. We currently support the events below, however if there are custom events you would like to add please feel free to reach out to chris@siro.ai.
+
+Default Events and Actions:
+
+| eventName           | recorder action  |
+|---------------------|------------------|
+| start               | start recorder   |
+| stop                | stop recorder    |
+| openPinMenu         | start recorder   |
+| openLead            | start recorder   |
+| openDataGridPanel   | start recorder   |
+| dispositioned       | stop recorder    |
+| pinClosed           | stop recorder    |
+| closeDataGridPanel  | start recorder   |
+
+
 
 Siro SDK must be initialized, otherwise events will be ignored. Check `SiroSDK.initialized` for the current initialization status.
 
