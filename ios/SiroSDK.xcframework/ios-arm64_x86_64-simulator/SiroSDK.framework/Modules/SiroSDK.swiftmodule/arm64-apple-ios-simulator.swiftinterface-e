@@ -14,6 +14,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseStorage
 import Foundation
+import Mixpanel
 import Network
 import QuartzCore
 import Swift
@@ -217,14 +218,13 @@ public struct SiroSDK {
   public static var visibile: Swift.Bool {
     get
   }
+  public static func isUserLoggedIn() -> Swift.Bool
   public static func setup(environment: SiroSDK.SKEnvironment = .production)
-  public static func startRecording()
   public static func requestRecordingPermissions()
-  public static func stopRecording()
   public static func sendEvent(_ eventName: Swift.String, interactionData: SiroSDK.InteractionData?)
   public static func handleAppWillTerminate()
   public static func show()
-  public static func hide()
+  public static func hide(withDelay: Swift.Bool = true)
   public static func logout()
 }
 public struct Contact {
@@ -243,14 +243,14 @@ public struct Coordinates {
   public init(from decoder: any Swift.Decoder) throws
 }
 public struct Address {
-  public init(street: Swift.String, city: Swift.String, state: Swift.String, zip: Swift.String)
+  public init(street: Swift.String?, city: Swift.String?, state: Swift.String?, zip: Swift.String?)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
 public struct InteractionData {
+  public init(from decoder: any Swift.Decoder) throws
   public init(id: Swift.String, userId: Swift.String?, leadId: Swift.String?, stage: SiroSDK.Stage?, coordinates: SiroSDK.Coordinates?, address: SiroSDK.Address?, note: Swift.String?, metadata: [Swift.String : SiroSDK.AnyCodable]?, contacts: [SiroSDK.Contact]?, leadDateCreated: Foundation.Date?)
   public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
 }
 public enum SKRecorderState : Swift.String {
   case paused
