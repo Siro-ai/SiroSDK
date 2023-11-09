@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		Y/rHh2S87YOd3fhg6novCcZSoRU=
+		zjcoS2OgC6mUDpr9Z3ByxwDDPSw=
 		</data>
 		<key>Headers/SiroKit.h</key>
 		<data>
@@ -14,51 +14,51 @@
 		</data>
 		<key>Headers/SiroSDK-Swift.h</key>
 		<data>
-		FA+upnek5g5pONv/epjPwCcPY/o=
+		55WqXs4+NmLoi8XMXXlmdDtOiD0=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		vWr5fhdPeqGw5bQhjb85tYqaG2g=
+		QFGUso+lWZ9VrAzzyCdJsqy+6Tc=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		h6EjVshlanLbIbCmIfuLi4vFC08=
+		JClFykRcHSlrKh6jtJnRRqInSO4=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		FHIGDiKjZTMy6KUQ7d5GzVsmByA=
+		hKSYutGR0Jj3R6rhd55cLykzzBQ=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		8kQS6+hRJMGOiKRqRZl3pqrAwEI=
+		U7KKEMi0dJhGMVQ5ApO0K7AzUKM=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		FHIGDiKjZTMy6KUQ7d5GzVsmByA=
+		hKSYutGR0Jj3R6rhd55cLykzzBQ=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		g45vRfyksc9CXeX3+aKzT0uVlkg=
+		17rF71ExNVmqEf6ISarHfwMFt/o=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		h6EjVshlanLbIbCmIfuLi4vFC08=
+		JClFykRcHSlrKh6jtJnRRqInSO4=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		dLXG0bRAoJ+qFDVGrnIrviMdu+g=
+		6NGJspkExA0xpfeFPEAqUTtrAWQ=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		VwAQ/JULJ8EfzXW02i8iJ1pGVcI=
+		/SlTgyehZPy0FddBfbeQWTArEVM=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		dLXG0bRAoJ+qFDVGrnIrviMdu+g=
+		6NGJspkExA0xpfeFPEAqUTtrAWQ=
 		</data>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		Jdt4PjsUNBTHOezu0lAVFEzl7c0=
+		g6B58FbrwsE7ucXDvp7K6tsYNhc=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -71,7 +71,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1qPw8I+lQI/T5yjyjN5hy2RsEESksDbJuB0G0OeZhSY=
+			/+I9K6EFAXN6tSoTE5lWATeUkToDd/svL7yXyEaQ62Q=
 			</data>
 		</dict>
 		<key>Headers/SiroKit.h</key>
@@ -85,77 +85,77 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			MMgcfS4x3Q6TLHg6EHhE+6r8CwU5gYOTqjuo7RJ4IIQ=
+			1ud4om3JdHf/VrJ1as93CjratPSBPD5QJGD149gmloE=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BsC25AiBBUL2H7tHc+vyYxSMGCeq8/hXNP/st4/xS6A=
+			jaNfq9fFIZEvuBNXlyIq5UwbM6RxeiPSmBBhYTwIrTA=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jDDFKoN8COUzsKlDu2mdya3aocx3d0sRskZMRbmrltc=
+			2KSVr7/eB2D+fAZm4duowDA7REccSMUEtpgNhHELZ0c=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4bkpYjKu9AixHIbiC/3RfHkrnZex4qlGjP8OumHGiFM=
+			g6Zca+Et59USzru8ySCPgRrAFy/FrLDR4IhFg9aS3to=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jDDFKoN8COUzsKlDu2mdya3aocx3d0sRskZMRbmrltc=
+			2KSVr7/eB2D+fAZm4duowDA7REccSMUEtpgNhHELZ0c=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3vlk+4dnbzaTHnY4lUTrDAlebPIAS5uEhXUaAfv7LcM=
+			Aoe451ayAgw+uL9hv74GBdyKKppNfp7lgmxAlRH8om0=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BsC25AiBBUL2H7tHc+vyYxSMGCeq8/hXNP/st4/xS6A=
+			jaNfq9fFIZEvuBNXlyIq5UwbM6RxeiPSmBBhYTwIrTA=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+s10vKFUP2jqfRLwkMv3lf/xSmI5oqSvlDPUqf7JyzI=
+			h0PWo4fJDCU90xxajdYQzKwBhTSNpKR7Gagb/SgIe7s=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			P9JRwVHQxHy4eFtc9WD0ZC0qTUqEEhQBapNahSItubc=
+			QSWCdpw6yLl6p2vLt2jnVzweBRb3YABKoCDEnpI+kWY=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+s10vKFUP2jqfRLwkMv3lf/xSmI5oqSvlDPUqf7JyzI=
+			h0PWo4fJDCU90xxajdYQzKwBhTSNpKR7Gagb/SgIe7s=
 			</data>
 		</dict>
 		<key>Modules/SiroSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			np8lNKZqrk1dbAmO7EOfaFv0HUmdoJTL2FQzsIfDrgc=
+			tk5ZAGL8jyiibPLvs+Hz8hERFkhTxXvOBabkCSexh/Q=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
