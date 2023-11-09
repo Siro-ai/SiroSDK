@@ -154,18 +154,16 @@ We currently support the events below. If you’d like other events, please reac
 
 Default Events and Actions:
 
-| eventName           | recorder action  |
-|---------------------|------------------|
-| start               | start recorder   |
-| stop                | stop recorder    |
-| openPinMenu         | start recorder   |
-| openLead            | start recorder   |
-| openDataGridPanel   | start recorder   |
-| dispositioned       | stop recorder    |
-| pinClosed           | stop recorder    |
-| closeDataGridPanel  | start recorder   |
-
-
+| eventName          | recorder action |
+| ------------------ | --------------- |
+| start              | start recorder  |
+| stop               | stop recorder   |
+| openPinMenu        | start recorder  |
+| openLead           | start recorder  |
+| openDataGridPanel  | start recorder  |
+| dispositioned      | stop recorder   |
+| pinClosed          | stop recorder   |
+| closeDataGridPanel | start recorder  |
 
 Siro SDK must be initialized, otherwise events will be ignored. Check `SiroSDK.initialized` for the current initialization status.
 
@@ -211,4 +209,26 @@ NSLayoutConstraint.activate([
 		siroSDKButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 		siroSDKButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8)
 ])
+```
+
+### SiroSDKUserDelegate
+
+You can use the `SiroSDKUserDelegate` to handle user state change events upon login and logout. The `SiroSDKUserDelegate` supports two functions: `didLoginUser` and `didLogoutUser`.
+
+```swift
+
+import SiroSDK
+import SwiftUI
+
+struct UserDelegate: SiroSDKUserDelegate {
+    func didLoginUser(user _: SiroUser) {
+        print("didLoginUser called")
+    }
+
+    func didLogoutUser() {
+        print("didLogoutUser called")
+    }
+}
+
+SiroSDK.userDelegate = UserDelegate()
 ```
