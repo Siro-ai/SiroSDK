@@ -232,3 +232,36 @@ struct UserDelegate: SiroSDKUserDelegate {
 
 SiroSDK.userDelegate = UserDelegate()
 ```
+
+### SiroSDKRecordingDelegate
+
+The `SiroSDKRecordingDelegate` exposes events related to the recorder. Currently we expose events for start, stop, pause, delete, and saving a recording.
+
+```swift
+import SiroSDK
+import SwiftUI
+
+struct RecordingDelegate: SiroSDKRecordingDelegate {
+    func didStartRecording(recordingId: String) {
+        print("Did start Recording 🎥")
+    }
+
+    func didStopRecording(recordingId: String) {
+        print("Did stop recording 🛑")
+    }
+
+    func didPauseRecording(recordingId: String) {
+        print("Did pause recording ⏸️")
+    }
+
+    func didDeleteRecording(recordingId: String) {
+        print("did delete reocring ␡")
+    }
+
+    func didSaveRecording(recordingId: String, recordingLink: URL) {
+        print("did save recording 😅")
+    }
+}
+
+   SiroSDK.recordingDelegate = RecordingDelegate()
+```
