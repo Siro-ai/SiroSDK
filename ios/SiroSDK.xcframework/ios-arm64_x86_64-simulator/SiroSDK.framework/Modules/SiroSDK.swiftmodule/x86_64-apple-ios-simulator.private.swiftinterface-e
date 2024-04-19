@@ -1,7 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
-// swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name SiroSDK
-// swift-module-flags-ignorable: -enable-bare-slash-regex
+// swift-compiler-version: Apple Swift version 5.10 (swiftlang-5.10.0.13 clang-1500.3.9.4)
+// swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name SiroSDK
 import AVFoundation
 import Accelerate
 import Combine
@@ -38,16 +37,35 @@ extension SwiftUI.View {
 }
 public protocol SiroSDKUserDelegate {
   func didLoginUser(user: SiroSDK.SiroUser)
-  func didLogoutUser()
+  func didLogoutUser(user: SiroSDK.SiroUser)
+  func didFailedToLoginUser()
 }
 extension SiroSDK.SiroSDKUserDelegate {
   public func didLoginUser(user _: SiroSDK.SiroUser)
-  public func didLogoutUser()
+  public func didLogoutUser(user _: SiroSDK.SiroUser)
+  public func didFailedToLoginUser()
 }
 public protocol SiroSDKRecordingDelegate {
-  func didSaveRecording()
-  func didPauseRecording()
-  func didDeleteRecording()
+  func didSaveRecording(recordingId: Swift.String, recordingLink: Foundation.URL)
+  func didPauseRecording(recordingId: Swift.String)
+  func didDeleteRecording(recordingId: Swift.String)
+  func didStartRecording(recordingId: Swift.String)
+  func didStopRecording(recordingId: Swift.String)
+  func didUpdateD2DMode(enabled: Swift.Bool)
+}
+extension SiroSDK.SiroSDKRecordingDelegate {
+  public func didSaveRecording(recordingId _: Swift.String, recordingLink _: Foundation.URL)
+  public func didPauseRecording(recordingId _: Swift.String)
+  public func didDeleteRecording(recordingId _: Swift.String)
+  public func didStartRecording(recordingId _: Swift.String)
+  public func didStopRecording(recordingId _: Swift.String)
+  public func didUpdateD2DMode(enabled _: Swift.Bool)
+}
+public protocol SiroSDKPermissionDelegate {
+  func didUpdateMicrophonePermissions(enabled: Swift.Bool)
+}
+extension SiroSDK.SiroSDKPermissionDelegate {
+  public func didUpdateMicrophonePermissions(enabled _: Swift.Bool)
 }
 @frozen public struct AnyCodable : Swift.Codable {
   public let value: Any
@@ -233,8 +251,22 @@ public struct SiroSDK {
   public static var visibile: Swift.Bool {
     get
   }
-  public static var userDelegate: (any SiroSDK.SiroSDKUserDelegate)?
-  public static var recordingDelegate: (any SiroSDK.SiroSDKRecordingDelegate)?
+  public static var displayToast: Swift.Bool {
+    get
+    set
+  }
+  public static var userDelegate: (any SiroSDK.SiroSDKUserDelegate)? {
+    get
+    set(delegate)
+  }
+  public static var recordingDelegate: (any SiroSDK.SiroSDKRecordingDelegate)? {
+    get
+    set(delegate)
+  }
+  public static var permissionDelegate: (any SiroSDK.SiroSDKPermissionDelegate)? {
+    get
+    set(delegate)
+  }
   public static func isUserLoggedIn() -> Swift.Bool
   public static func setup(environment: SiroSDK.SKEnvironment = .production)
   public static func requestRecordingPermissions()

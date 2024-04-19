@@ -10,10 +10,10 @@ Pod::Spec.new do |s|
 	s.ios.deployment_target  = '15.0'
 	s.vendored_frameworks 	 = "ios/SiroSDK.xcframework"
 
-	s.dependency 'FirebaseAuth', '~> 10.12.0'
-	s.dependency 'FirebaseDynamicLinks', '~> 10.12.0'
-	s.dependency 'FirebaseFirestore', '~> 10.12.0'
-	s.dependency 'FirebaseFirestoreSwift', '~> 10.12.0'
-	s.dependency 'FirebaseStorage', '~> 10.12.0'
-	s.dependency 'Mixpanel', '~> 4.1.4'
+	s.dependency 'FirebaseAuth', '~> 10.12'
+	s.dependency 'FirebaseDynamicLinks', '~> 10.12'
+	s.dependency 'FirebaseFirestore', '~> 10.12'
+	s.dependency 'FirebaseFirestoreSwift', '~> 10.12'
+	s.dependency 'FirebaseStorage', '~> 10.12'
+	s.dependency 'Mixpanel', '~> 4.1'
 end
