@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+    # paths:
+    #   - "SiroSDK.podspec.json"
+    #   - "ios/SiroSDK.xcframework"
   workflow_dispatch:
 
 jobs:
@@ -17,4 +20,4 @@ jobs:
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
         run: |
-          pod trunk push SiroSDK.podspec.json
+          pod trunk push SiroSDK.podspec.json --verbose --allow-warnings
