@@ -1,12 +1,12 @@
 name: Release SiroSDK
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    # paths:
-    #   - "SiroSDK.podspec.json"
-    #   - "ios/SiroSDK.xcframework"
+    paths:
+      - "SiroSDK.podspec.json"
+      - "ios/SiroSDK.xcframework"
   workflow_dispatch:
 
 jobs:
