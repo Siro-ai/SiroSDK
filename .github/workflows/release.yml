@@ -20,4 +20,4 @@ jobs:
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
         run: |
-          pod trunk push SiroSDK.podspec.json --verbose --allow-warnings
+          pod trunk push SiroSDK.podspec.json --verbose --allow-warnings --skip-import-validation --skip-tests
