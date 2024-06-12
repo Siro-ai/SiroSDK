@@ -4,9 +4,9 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - "SiroSDK.podspec.json"
-      - "ios/SiroSDK.xcframework"
+    # paths:
+    #   - "SiroSDK.podspec.json"
+    #   - "ios/SiroSDK.xcframework"
   workflow_dispatch:
 
 jobs:
@@ -16,6 +16,18 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
+      - name: Read Version from File
+        run: |
+          echo "VERSION=$(jq -r '.version' SiroSDK.podspec.json)" >> $GITHUB_ENV
+      - name: Log Version
+        run: |
+          echo "Pushing SiroSDK Version: $VERSION"
+      - name: Create Github Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION }}
+          generate_release_notes: true
+          make_latest: true
       - name: Publish to SiroSDK to CocoaPods
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
