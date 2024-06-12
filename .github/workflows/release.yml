@@ -1,7 +1,7 @@
 name: Release SiroSDK
 
 on:
-  push:
+  pull_request:
     branches:
       - main
     paths:
@@ -11,7 +11,7 @@ on:
 
 jobs:
   release:
-    runs-on: macos-latest
+    runs-on: ghcr.io/cirruslabs/macos-runner:sonoma
     name: Push SiroSDK to cocoapods
     environment: production
     steps:
