@@ -1,0 +1,35 @@
+name: Release SiroSDK
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "SiroSDK.podspec.json"
+      - "ios/SiroSDK.xcframework"
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ghcr.io/cirruslabs/macos-runner:sonoma
+    name: Push SiroSDK to cocoapods
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read Version from File
+        run: |
+          echo "VERSION=$(jq -r '.version' SiroSDK.podspec.json)" >> $GITHUB_ENV
+      - name: Log Version
+        run: |
+          echo "Pushing SiroSDK Version: $VERSION"
+      - name: Publish to SiroSDK to CocoaPods
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: |
+          pod trunk push SiroSDK.podspec.json --verbose --allow-warnings --skip-import-validation --skip-tests
+      - name: Create Github Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION }}
+          generate_release_notes: true
+          make_latest: true
