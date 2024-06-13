@@ -22,14 +22,14 @@ jobs:
       - name: Log Version
         run: |
           echo "Pushing SiroSDK Version: $VERSION"
-      - name: Publish to SiroSDK to CocoaPods
-        env:
-          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-        run: |
-          pod trunk push SiroSDK.podspec.json --verbose --allow-warnings --skip-import-validation --skip-tests
       - name: Create Github Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.VERSION }}
           generate_release_notes: true
           make_latest: true
+      - name: Publish to SiroSDK to CocoaPods
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: |
+          pod trunk push SiroSDK.podspec.json --verbose --allow-warnings --skip-import-validation --skip-tests
