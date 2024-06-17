@@ -1,4 +1,0 @@
-framework module SiroSDK {
-  header "SiroSDK-Swift.h"
-  requires objc
-}
