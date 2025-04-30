@@ -95,6 +95,7 @@ The SiroSDK stores data in two main locations:
 ## Roadmap
 ### Enhancements
 - Better integration documenation 
+- Finer control over syncing/uploading
 - Better error handling and concrete error types
 - Userspacing files & not deleting files on logout
 - Observable download state for recordings and chunks
@@ -103,6 +104,8 @@ The SiroSDK stores data in two main locations:
 
 
 ### Known Bugs
-* Comlpleted recordings' elapsedDuration being saved as 0
+* (In-Progress) Conversation types have a bug right now, preffered conversationtype is automatically used right for now if a user token is set.
+* (In-Progess) Server side id's are not being saved correctly on device despite being returned
 * Latest recordings sometimes do not upload right away, work around right now is to manually sync or make another recording
+* Comlpleted recordings' elapsedDuration being saved as 0
   
