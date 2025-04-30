@@ -1,0 +1,15 @@
+{
+  "originHash" : "77e7dfd2f360909acdfc5c00f3af3586fcb1b1d76409a8886601c20652639c83",
+  "pins" : [
+    {
+      "identity" : "sirosdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Siro-ai/SiroSDK",
+      "state" : {
+        "revision" : "3473f4b43593635624a0405ca1cb93ac8503f67a",
+        "version" : "2.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
