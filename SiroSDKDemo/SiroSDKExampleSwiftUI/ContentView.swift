@@ -1,7 +1,6 @@
 import SiroSDK
 import SwiftUI
 
-let interactionData = InteractionData(id: "someId", userId: "someUserID", leadId: "leadId", stage: Stage(id: "stageId", name: "Won", color: "#fff", icon: "https://icon.jpg", won: true, interacted: true), coordinates: nil, address: Address(street: "some street", city: "Some City", state: "NY", zip: "11201"), note: "I got the sale!", metadata: [:], contacts: [], leadDateCreated: Date())
 
 struct ActionButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -35,6 +34,14 @@ struct ContentView: View {
     @State private var showingJsonFile = false
     @State private var recordings: [SiroRecording] = []
     @State private var isLoadingRecordings = false
+    @State private var recordingTitle: String = ""
+    @State private var isPrivate: Bool = false
+    @State private var isAutomaticSplitEnabled: Bool = false
+    @State private var isRecording: Bool = false
+    @State private var crmObjectId: String = ""
+    @State private var crmObjectType: String = ""
+    @State private var crmTenantId: String = ""
+    @State private var crmPlatform: String = ""
 
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -47,6 +54,7 @@ struct ContentView: View {
         NavigationView {
             ScrollView {
                 VStack {
+
                     TextField("Initialize Auth Token", text: $authToken)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.bottom)
@@ -68,16 +76,6 @@ struct ContentView: View {
                         Text("Set Auth Token")
                     }
                     .buttonStyle(ActionButtonStyle())
-
-                    Button {
-                        showingActionSheet = true
-                    } label: {
-                        Text("More Actions")
-                    }
-                    .buttonStyle(ActionButtonStyle())
-                    .sheet(isPresented: $showingActionSheet) {
-                        MoreActionsView(isPresented: $showingActionSheet)
-                    }
 
                     Button(action: {
                         SiroSDK.logout()
@@ -133,6 +131,58 @@ struct ContentView: View {
                             .foregroundColor(.black)
                             .padding(.top, 8)
                     }
+                    // Recording Metadata Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        DisclosureGroup("Recording Settings") {
+                            VStack(alignment: .leading, spacing: 12) {
+                                TextField("Recording Title", text: $recordingTitle)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                
+                                Toggle("Private Recording", isOn: $isPrivate)
+                                
+                                Toggle("Automatic Split", isOn: $isAutomaticSplitEnabled)
+
+                                Text("CRM Settings")
+                                    .font(.subheadline)
+                                    .padding(.top, 8)
+                                
+                                TextField("CRM Object ID", text: $crmObjectId)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                
+                                TextField("CRM Object Type", text: $crmObjectType)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                
+                                TextField("CRM Tenant ID", text: $crmTenantId)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                
+                                TextField("CRM Platform", text: $crmPlatform)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                
+                                Button(action: {
+                                    SiroSDK.recordingTitle = recordingTitle
+                                    SiroSDK.isPrivateRecording = isPrivate
+                                    SiroSDK.automaticSplitEnabled = isAutomaticSplitEnabled
+                                    SiroSDK.crmObjectId = crmObjectId.isEmpty ? nil : crmObjectId
+                                    SiroSDK.crmObjectType = crmObjectType.isEmpty ? nil : crmObjectType
+                                    SiroSDK.crmTenantId = crmTenantId.isEmpty ? nil : crmTenantId
+                                    SiroSDK.crmPlatform = crmPlatform.isEmpty ? nil : crmPlatform
+                                    SiroSDK.startRecording()
+                                }) {
+                                    Text("Start Recording with above settings")
+                                }
+                                .buttonStyle(ActionButtonStyle())
+                                .disabled(isRecording)
+                            }
+                            .padding(.top, 8)
+                        }
+                    }
+                    .padding()
+                    .background(Color(.systemBackground))
+                    .cornerRadius(12)
+                    .padding(.bottom)
+                    .onChange(of: SiroSDK.recordingStatus) { newStatus in
+                        isRecording = newStatus == .recording
+                    }
 
                     AudioVisualizerView()
 
@@ -176,6 +226,44 @@ struct ContentView: View {
                                                         .foregroundColor(.red)
                                                 }
                                             }
+                                            Text("Title: \(recording.title ?? "[not set]")")
+                                                .font(.caption)
+                                                .foregroundColor(.gray)
+                                            Text("ConvoType: \(recording.conversationType ?? "[not set]")")
+                                                .font(.caption)
+                                                .foregroundColor(.gray)
+
+                                            Text("Private: \(recording.isPrivate ? "Yes" : "No")")
+                                                .font(.caption)
+                                                .foregroundColor(.gray)
+                                            Text("Auto Split: \(recording.isAutomaticSplitEnabled ? "Enabled" : "Disabled")")
+                                                .font(.caption)
+                                                .foregroundColor(.gray)
+                                            
+                                            if let crmObjectId = recording.crmObjectId {
+                                                Text("CRM Object ID: \(crmObjectId)")
+                                                    .font(.caption)
+                                                    .foregroundColor(.gray)
+                                            }
+                                            
+                                            if let crmObjectType = recording.crmObjectType {
+                                                Text("CRM Object Type: \(crmObjectType)")
+                                                    .font(.caption)
+                                                    .foregroundColor(.gray)
+                                            }
+                                            
+                                            if let crmTenantId = recording.crmTenantId {
+                                                Text("CRM Tenant ID: \(crmTenantId)")
+                                                    .font(.caption)
+                                                    .foregroundColor(.gray)
+                                            }
+                                            
+                                            if let crmPlatform = recording.crmPlatform {
+                                                Text("CRM Platform: \(crmPlatform)")
+                                                    .font(.caption)
+                                                    .foregroundColor(.gray)
+                                            }
+                                            
                                             Text("Local ID: \(recording.localId)")
                                                 .font(.caption)
                                                 .foregroundColor(.gray)
@@ -185,7 +273,6 @@ struct ContentView: View {
                                             Text("ElapsedTime:\(recording.elapsedTime)")
                                                 .font(.caption)
                                                 .foregroundColor(.gray)
-
                                         }
                                         .padding(.vertical, 4)
                                         .padding(.horizontal)
@@ -228,7 +315,11 @@ struct ContentView: View {
 
     private func refreshRecordings() async {
         isLoadingRecordings = true
-        recordings = await DataManager.shared.fetchRecordings()
+        do {
+            recordings = try await SiroSDK.getLocalRecordings()
+        } catch {
+            print("Error getting local recrodings")
+        }
         isLoadingRecordings = false
     }
 
@@ -248,100 +339,6 @@ struct ContentView: View {
         } catch {
             print("Error fetching conversation types: \(error)")
         }
-    }
-}
-
-struct MoreActionsView: View {
-    @Binding var isPresented: Bool
-
-    var body: some View {
-        VStack(spacing: 12) {
-            Text("Available Actions")
-                .font(.headline)
-                .padding(.vertical)
-
-            Button(action: {
-                SiroSDK.sendEvent("start", interactionData: interactionData)
-            }) {
-                Text("Send start event")
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 36)
-            }
-            .foregroundColor(.white)
-            .background(Color.siroYellow)
-            .cornerRadius(.infinity)
-
-            Button(action: {
-                SiroSDK.sendEvent("stop", interactionData: interactionData)
-            }) {
-                Text("Send stop event")
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 36)
-            }
-            .foregroundColor(.white)
-            .background(Color.siroYellow)
-            .cornerRadius(.infinity)
-
-            Button("Send openPinMenu Event") {
-                SiroSDK.sendEvent("openPinMenu", interactionData: interactionData)
-            }
-            .buttonStyle(ActionButtonStyle())
-
-            Button("Send openLead Event") {
-                SiroSDK.sendEvent("openLead", interactionData: nil)
-            }
-            .buttonStyle(ActionButtonStyle())
-
-            Button("Send openDataGridPanel Event") {
-                SiroSDK.sendEvent("openDataGridPanel", interactionData: interactionData)
-            }
-            .buttonStyle(ActionButtonStyle())
-
-            Button("Send dispositioned Event") {
-                SiroSDK.sendEvent("dispositioned", interactionData: nil)
-            }
-            .buttonStyle(ActionButtonStyle())
-
-            Button("Send pinClosed Event") {
-                SiroSDK.sendEvent("pinClosed", interactionData: interactionData)
-            }
-            .buttonStyle(ActionButtonStyle())
-
-            Button("Send closeDataGridPanel event") {
-                SiroSDK.sendEvent("closeDataGridPanel", interactionData: interactionData)
-            }
-            .buttonStyle(ActionButtonStyle())
-
-            Button("Process D2D mode action") {
-                SiroSDK.sendEvent("leadOpened", interactionData: interactionData)
-            }
-            .buttonStyle(ActionButtonStyle())
-
-            Button(action: {
-                Task {
-                    do {
-                        let success = try await RandomFilesProvider.testUpload()
-                    } catch {
-                        print("error test uploading random files")
-                    }
-                }
-            }) {
-                Text("Test upload")
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 36)
-            }
-            .foregroundColor(.white)
-            .background(Color.siroYellow)
-            .cornerRadius(.infinity)
-
-            Button("Dismiss") {
-                isPresented = false
-            }
-            .buttonStyle(CancelButtonStyle())
-
-            Spacer()
-        }
-        .padding()
     }
 }
 

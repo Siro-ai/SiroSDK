@@ -330,9 +330,9 @@ public struct SiroSDK {
   public static func hide(withDelay: Swift.Bool = true)
   public static func logout()
   public static func initialize(withSiroToken token: Swift.String) async throws
+  public static func getLocalRecordings() async throws -> [SiroRecording]
   public static func fetchUser() async throws -> SiroUser
   public static func fetchConversationTypes() async throws -> [SiroConversationType]
-  public static func setConversationType()
   public static func startRecording()
   public static func pauseRecording()
   public static func getCurrentRecordingLocalId() -> Swift.String?
@@ -353,11 +353,23 @@ public struct SiroSDK {
     get
     set
   }
-  public static var conversationType: Swift.String? {
+  public static var recordingTitle: Swift.String {
     get
     set
   }
-  public static var recordingName: Swift.String {
+  public static var crmObjectId: Swift.String? {
+    get
+    set
+  }
+  public static var crmObjectType: Swift.String? {
+    get
+    set
+  }
+  public static var crmTenantId: Swift.String? {
+    get
+    set
+  }
+  public static var crmPlatform: Swift.String? {
     get
     set
   }
@@ -410,9 +422,17 @@ public struct SiroRecording : Swift.Codable {
   public let id: Swift.String?
   public let localId: Swift.String
   public let dateCreated: Foundation.Date
+  public let title: Swift.String?
+  public let conversationType: Swift.String?
+  public let isAutomaticSplitEnabled: Swift.Bool
   public let elapsedTime: Swift.Int
+  public let isPrivate: Swift.Bool
   public let isCurrentRecording: Swift.Bool?
   public let isUploaded: Swift.Bool
+  public let crmObjectId: Swift.String?
+  public let crmObjectType: Swift.String?
+  public let crmTenantId: Swift.String?
+  public let crmPlatform: Swift.String?
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -434,19 +454,6 @@ public struct LocalDataStore : Swift.Codable {
   public let chunks: [LocalChunk]
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
-}
-@_hasMissingDesignatedInitializers public actor DataManager {
-  public static let shared: DataManager
-  public var storageSlug: Swift.String {
-    get
-  }
-  public func loadObject() async -> LocalDataStore?
-  public func fetchRecordings() async -> [SiroRecording]
-  @objc deinit
-  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-  @_semantics("defaultActor") nonisolated final public var unownedExecutor: _Concurrency.UnownedSerialExecutor {
-    get
-  }
 }
 extension SiroSDKUI : Swift.Sendable {}
 extension FileStructureView : Swift.Sendable {}
