@@ -65,3 +65,44 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 
 ```
+
+## Data Storage
+
+The SiroSDK stores data in two main locations:
+
+1. **Metadata Storage**
+   - All metadata is stored in `siro/LocalDataStore.json` in the user's documents directory
+   - This includes:
+     - User information
+     - Conversation types
+     - Recording metadata
+     - Chunk metadata
+     - Last updated timestamp
+
+2. **Audio Chunks**
+   - Audio chunks are stored in subdirectories under `siro/` named with their local recording ID
+   - Each recording's chunks are organized as:
+     ```
+     siro/
+     ├── LocalDataStore.json
+     └── {localRecordingId}/
+         ├── {localChunkId1}.{extension}
+         ├── {localChunkId2}.{extension}
+         └── ...
+     ```
+   - Chunks are associated with their recording through the `recordingId` field in the metadata
+
+## Roadmap
+### Enhancements
+- Better integration documenation 
+- Better error handling and concrete error types
+- Userspacing files & not deleting files on logout
+- Observable download state for recordings and chunks
+- Better telemetry
+- Switching local .json file to DB
+
+
+### Known Bugs
+* Comlpleted recordings' elapsedDuration being saved as 0
+* Latest recordings sometimes do not upload right away, work around right now is to manually sync or make another recording
+  
