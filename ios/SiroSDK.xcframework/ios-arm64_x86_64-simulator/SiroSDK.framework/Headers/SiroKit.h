@@ -1,10 +1,3 @@
-//
-//  SiroSDK.h
-//  SiroSDK
-//
-//  Created by Daniel Salib on 5/30/23.
-//
-
 #import <Foundation/Foundation.h>
 
 //! Project version number for SiroSDK.
