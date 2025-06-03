@@ -14,7 +14,7 @@ SiroSDK allows your users to create Siro recordings without navigating out of yo
 
 ```
 dependencies: [
-    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.0.0")
+    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.0.2")
 ]
 ```
 
