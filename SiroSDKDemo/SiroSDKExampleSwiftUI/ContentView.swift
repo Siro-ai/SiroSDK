@@ -43,13 +43,6 @@ struct ContentView: View {
     @State private var crmTenantId: String = ""
     @State private var crmPlatform: String = ""
 
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        return formatter
-    }()
-
     var body: some View {
         NavigationView {
             ScrollView {
@@ -202,7 +195,6 @@ struct ContentView: View {
                             }
                             .disabled(isLoadingRecordings)
                         }
-//                        .padding(.horizontal)
 
                         if isLoadingRecordings {
                             ProgressView()
@@ -214,92 +206,8 @@ struct ContentView: View {
                                 .padding()
                         } else {
                             ForEach(recordings, id: \.localId) { recording in
-                                VStack {
-                                    NavigationLink(destination: ChunksView(recording: recording)) {
-                                        VStack(alignment: .leading, spacing: 4) {
-                                            HStack {
-                                                Text("ID: \(recording.id ?? "Local Only")")
-                                                    .font(.subheadline)
-                                                if recording.isCurrentRecording == true {
-                                                    Text("• Recording")
-                                                        .font(.caption)
-                                                        .foregroundColor(.red)
-                                                }
-                                            }
-                                            Text("Title: \(recording.title ?? "[not set]")")
-                                                .font(.caption)
-                                                .foregroundColor(.gray)
-                                            Text("ConvoType: \(recording.conversationType ?? "[not set]")")
-                                                .font(.caption)
-                                                .foregroundColor(.gray)
-
-                                            Text("Private: \(recording.isPrivate ? "Yes" : "No")")
-                                                .font(.caption)
-                                                .foregroundColor(.gray)
-                                            Text("Auto Split: \(recording.isAutomaticSplitEnabled ? "Enabled" : "Disabled")")
-                                                .font(.caption)
-                                                .foregroundColor(.gray)
-                                            
-                                            if let crmObjectId = recording.crmObjectId {
-                                                Text("CRM Object ID: \(crmObjectId)")
-                                                    .font(.caption)
-                                                    .foregroundColor(.gray)
-                                            }
-                                            
-                                            if let crmObjectType = recording.crmObjectType {
-                                                Text("CRM Object Type: \(crmObjectType)")
-                                                    .font(.caption)
-                                                    .foregroundColor(.gray)
-                                            }
-                                            
-                                            if let crmTenantId = recording.crmTenantId {
-                                                Text("CRM Tenant ID: \(crmTenantId)")
-                                                    .font(.caption)
-                                                    .foregroundColor(.gray)
-                                            }
-                                            
-                                            if let crmPlatform = recording.crmPlatform {
-                                                Text("CRM Platform: \(crmPlatform)")
-                                                    .font(.caption)
-                                                    .foregroundColor(.gray)
-                                            }
-                                            
-                                            Text("Local ID: \(recording.localId)")
-                                                .font(.caption)
-                                                .foregroundColor(.gray)
-                                            Text("Created: \(dateFormatter.string(from: recording.dateCreated))")
-                                                .font(.caption)
-                                                .foregroundColor(.gray)
-                                            Text("ElapsedTime:\(recording.elapsedTime)")
-                                                .font(.caption)
-                                                .foregroundColor(.gray)
-                                        }
-                                        .padding(.vertical, 4)
-                                        .padding(.horizontal)
-                                        .background(Color(.systemBackground))
-                                        .cornerRadius(8)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-
-                                    if recording.isCurrentRecording == true {
-                                        Button(action: {
-                                            Task {
-                                                _ = await SiroSDK.loadResumableRecording(recordingId: recording.id ?? recording.localId)
-                                            }
-                                        }) {
-                                            Text("Resume Recording")
-                                                .foregroundColor(.white)
-                                                .padding(.horizontal, 12)
-                                                .padding(.vertical, 6)
-                                                .background(Color.siroYellow)
-                                                .cornerRadius(8)
-                                        }
-                                        .padding(.top, 4)
-                                    }
-                                }
-//                                .padding(.horizontal)
+                                RecordingView(recording: recording)
                             }
-//                            .padding(.horizontal)
                         }
                     }
                     .padding(.top)
@@ -342,6 +250,104 @@ struct ContentView: View {
     }
 }
 
+struct RecordingView:View{
+    var recording:SiroRecording
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }()
+
+
+    var body: some View {
+        VStack {
+            NavigationLink(destination: ChunksView(recording: recording)) {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        Text("ID: \(recording.id ?? "Local Only")")
+                            .font(.subheadline)
+                        if recording.isCurrentRecording == true {
+                            Text("• Recording")
+                                .font(.caption)
+                                .foregroundColor(.red)
+                        }
+                    }
+                    Text("Title: \(recording.title ?? "[not set]")")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    Text("ConvoType: \(recording.conversationType ?? "[not set]")")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+
+                    Text("Private: \(recording.isPrivate ? "Yes" : "No")")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    Text("Auto Split: \(recording.isAutomaticSplitEnabled ? "Enabled" : "Disabled")")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    
+                    if let crmObjectId = recording.crmObjectId {
+                        Text("CRM Object ID: \(crmObjectId)")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    
+                    if let crmObjectType = recording.crmObjectType {
+                        Text("CRM Object Type: \(crmObjectType)")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    
+                    if let crmTenantId = recording.crmTenantId {
+                        Text("CRM Tenant ID: \(crmTenantId)")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    
+                    if let crmPlatform = recording.crmPlatform {
+                        Text("CRM Platform: \(crmPlatform)")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    
+                    Text("Local ID: \(recording.localId)")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    Text("Created: \(dateFormatter.string(from: recording.dateCreated))")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                    Text("ElapsedTime:\(recording.elapsedTime)")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
+                .padding(.vertical, 4)
+                .padding(.horizontal)
+                .background(Color(.systemBackground))
+                .cornerRadius(8)
+            }
+            .buttonStyle(PlainButtonStyle())
+
+            if recording.isCurrentRecording == true {
+                Button(action: {
+                    Task {
+                        _ = await SiroSDK.loadResumableRecording(recordingId: recording.id ?? recording.localId)
+                    }
+                }) {
+                    Text("Resume Recording")
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color.siroYellow)
+                        .cornerRadius(8)
+                }
+                .padding(.top, 4)
+            }
+        }
+    }
+    
+    
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
