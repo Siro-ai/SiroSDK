@@ -1,49 +1,55 @@
 # SiroSDK for iOS
 
-SiroSDK allows your users to create Siro recordings without navigating out of your app.
+SiroSDK allows your users to create Siro recordings without navigating out of your app. The SDK provides a complete recording solution with automatic audio processing, transcription, and cloud synchronization.
 
 ## Requirements
 
-- Requires iOS 15+
-- works with SPM and Cocoapods
-
+- iOS 15.0+
+- Swift 5.0+
+- Works with Swift Package Manager (SPM) and CocoaPods
 
 ## Installation
 
-### Add SiroSDK to SPM or with Cocoapods in your Podfile:
+### Swift Package Manager
 
-```
+Add SiroSDK to your project dependencies:
+
+```swift
 dependencies: [
     .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.0.2")
 ]
 ```
 
-```
-pod 'SiroSDK'
-```
+## Setup
 
-### Add the following keys to the Info.plist:
+### 1. Configure Info.plist
 
-- Privacy - Location When In Use Usage Description
-- Privacy - Microphone Usage Description
-  ![Screenshot](ios/docs/info-plist.png)
+Add the following privacy keys to your `Info.plist`:
 
-### Ensure background audio recording is enabled
+- `Privacy - Location When In Use Usage Description` - Required for location-based features
+- `Privacy - Microphone Usage Description` - Required for audio recording
 
-- Signing & Capabilities -> Background Modes -> check Audio, AirPlay, and Picture in Picture
+![Info.plist Configuration](ios/docs/info-plist.png)
 
-![Screenshot](ios/docs/background_modes.png)
+### 2. Enable Background Audio
 
-### Call `setup()` and `handleAppWillTerminate()` within app entry point
+In your Xcode project:
+1. Go to **Signing & Capabilities**
+2. Add **Background Modes**
+3. Check **Audio, AirPlay, and Picture in Picture**
 
-Example App Entry Point (e.g., SiroSDKExampleApp.swift)
+![Background Modes](ios/docs/background_modes.png)
+
+### 3. Initialize the SDK
+
+Call `setup()` and `handleAppWillTerminate()` in your app's entry point:
 
 ```swift
 import SiroSDK
 import SwiftUI
 
 @main
-struct SiroSDKExampleSwiftUI: App {
+struct MyApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     init() {
@@ -59,53 +65,457 @@ struct SiroSDKExampleSwiftUI: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func applicationWillTerminate(_: UIApplication) {
-        // Stop the AVAudioRecorder when the app is about to terminate
         SiroSDK.handleAppWillTerminate()
     }
 }
+```
 
+## Quick Start
+
+### 1. Initialize with Authentication
+
+```swift
+import SiroSDK
+
+// Initialize with your Siro authentication token
+do {
+    try await SiroSDK.initialize(withSiroToken: "your-auth-token")
+    print("SDK initialized successfully!")
+} catch {
+    print("Initialization failed: \(error)")
+}
+```
+
+### 2. Configure Recording Settings
+
+```swift
+// Set recording metadata
+SiroSDK.recordingTitle = "My Recording"
+SiroSDK.isPrivateRecording = false
+SiroSDK.automaticSplitEnabled = true
+
+// Set CRM integration data (optional)
+SiroSDK.crmObjectId = "crm-123"
+SiroSDK.crmObjectType = "contact"
+SiroSDK.crmTenantId = "tenant-456"
+SiroSDK.crmPlatform = "salesforce"
+```
+
+### 3. Start Recording
+
+```swift
+// Start recording with current settings
+SiroSDK.startRecording()
+
+// Check recording status
+if SiroSDK.recordingStatus == .recording {
+    print("Recording is active")
+}
+```
+
+### 4. Monitor Recording Progress
+
+```swift
+// Get current recording time
+let duration = SiroSDK.recordingTime
+
+// Get audio samples for visualization
+let samples = SiroSDK.audioSamples
+
+// Use Combine for real-time updates (iOS 13+)
+if #available(iOS 13.0, *) {
+    SiroSDK.audioLevelsPublisher
+        .sink { samples in
+            // Update your audio visualizer
+            updateAudioVisualizer(with: samples)
+        }
+        .store(in: &cancellables)
+}
+```
+
+### 5. Stop and Save Recording
+
+```swift
+// Stop the current recording
+SiroSDK.stopRecording()
+```
+
+## Complete Example
+
+Here's a complete example showing how to integrate SiroSDK into your SwiftUI app:
+
+```swift
+import SiroSDK
+import SwiftUI
+
+struct ContentView: View {
+    @State private var authToken: String = ""
+    @State private var recordingTitle: String = ""
+    @State private var isPrivate: Bool = false
+    @State private var isRecording: Bool = false
+    @State private var recordings: [SiroRecording] = []
+    
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Authentication Section
+                    VStack(alignment: .leading) {
+                        Text("Authentication")
+                            .font(.headline)
+                        
+                        TextField("Auth Token", text: $authToken)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        Button("Initialize SDK") {
+                            Task {
+                                do {
+                                    try await SiroSDK.initialize(withSiroToken: authToken)
+                                    print("✅ SDK initialized!")
+                                } catch {
+                                    print("❌ Initialization failed: \(error)")
+                                }
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    
+                    // Recording Settings Section
+                    VStack(alignment: .leading) {
+                        Text("Recording Settings")
+                            .font(.headline)
+                        
+                        TextField("Recording Title", text: $recordingTitle)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                        Toggle("Private Recording", isOn: $isPrivate)
+                        
+                        Button(isRecording ? "Stop Recording" : "Start Recording") {
+                            if isRecording {
+                                SiroSDK.stopRecording()
+                            } else {
+                                SiroSDK.recordingTitle = recordingTitle
+                                SiroSDK.isPrivateRecording = isPrivate
+                                SiroSDK.startRecording()
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(authToken.isEmpty)
+                    }
+                    
+                    // Recordings List
+                    VStack(alignment: .leading) {
+                        Text("Local Recordings")
+                            .font(.headline)
+                        
+                        ForEach(recordings, id: \.localId) { recording in
+                            RecordingRow(recording: recording)
+                        }
+                    }
+                }
+                .padding()
+            }
+            .navigationTitle("SiroSDK Demo")
+            .task {
+                await loadRecordings()
+            }
+            .onChange(of: SiroSDK.recordingStatus) { status in
+                isRecording = status == .recording
+            }
+        }
+    }
+    
+    private func loadRecordings() async {
+        do {
+            recordings = try await SiroSDK.getLocalRecordings()
+        } catch {
+            print("Error loading recordings: \(error)")
+        }
+    }
+}
+
+struct RecordingRow: View {
+    let recording: SiroRecording
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(recording.title ?? "Untitled")
+                .font(.headline)
+            Text("Duration: \(recording.elapsedTime) seconds")
+                .font(.caption)
+            Text("Created: \(recording.dateCreated, style: .date)")
+                .font(.caption)
+        }
+        .padding()
+        .background(Color(.systemGray6))
+        .cornerRadius(8)
+    }
+}
+```
+
+## API Reference
+
+### Core Properties
+
+#### Recording Status
+```swift
+// Current recording status
+SiroSDK.recordingStatus: SKRecorderState
+
+// Check if SDK is initialized
+SiroSDK.initialized: Bool
+
+// Check if user is logged in
+SiroSDK.isUserLoggedIn(): Bool
+
+// SDK version
+SiroSDK.version: String
+```
+
+#### Recording Configuration
+```swift
+// Recording metadata
+SiroSDK.recordingTitle: String
+SiroSDK.isPrivateRecording: Bool
+SiroSDK.automaticSplitEnabled: Bool
+
+// CRM integration (optional)
+SiroSDK.crmObjectId: String?
+SiroSDK.crmObjectType: String?
+SiroSDK.crmTenantId: String?
+SiroSDK.crmPlatform: String?
+```
+
+#### Audio Monitoring
+```swift
+// Current recording duration
+SiroSDK.recordingTime: TimeInterval
+
+// Audio level samples for visualization
+SiroSDK.audioSamples: [Float]
+
+// Audio levels publisher (iOS 13+)
+SiroSDK.audioLevelsPublisher: AnyPublisher<[Float], Never>
+```
+
+### Core Methods
+
+#### Initialization
+```swift
+// Setup SDK with environment
+SiroSDK.setup(environment: .production)
+
+// Initialize with authentication token
+try await SiroSDK.initialize(withSiroToken: "token")
+
+// Request recording permissions
+SiroSDK.requestRecordingPermissions()
+```
+
+#### Recording Control
+```swift
+// Start recording
+SiroSDK.startRecording()
+
+// Pause recording
+SiroSDK.pauseRecording()
+
+// Stop recording
+SiroSDK.stopRecording()
+
+// Delete current recording
+SiroSDK.deleteRecording()
+```
+
+#### Data Management
+```swift
+// Get local recordings
+let recordings = try await SiroSDK.getLocalRecordings()
+
+// Fetch user information
+let user = try await SiroSDK.fetchUser()
+
+// Fetch conversation types
+let types = try await SiroSDK.fetchConversationTypes()
+
+// Load resumable recording
+let loaded = await SiroSDK.loadResumableRecording(recordingId: "id")
+```
+
+#### UI Control
+```swift
+// Show SDK interface
+SiroSDK.show()
+
+// Hide SDK interface
+SiroSDK.hide(withDelay: true)
+
+// Logout user
+SiroSDK.logout()
+```
+
+### Delegates
+
+The SDK provides several delegate protocols for handling events:
+
+```swift
+// Recording events
+SiroSDK.recordingDelegate = self
+
+// Permission events
+SiroSDK.permissionDelegate = self
+
+// Audio level events
+SiroSDK.audioLevelDelegate = self
+
+// User events
+SiroSDK.userDelegate = self
 ```
 
 ## Data Storage
 
 The SiroSDK stores data in two main locations:
 
-1. **Metadata Storage**
-   - All metadata is stored in `siro/LocalDataStore.json` in the user's documents directory
-   - This includes:
-     - User information
-     - Conversation types
-     - Recording metadata
-     - Chunk metadata
-     - Last updated timestamp
+### 1. Metadata Storage
+- All metadata is stored in `siro/LocalDataStore.json` in the user's documents directory
+- This includes:
+  - User information
+  - Conversation types
+  - Recording metadata
+  - Chunk metadata
+  - Last updated timestamp
 
-2. **Audio Chunks**
-   - Audio chunks are stored in subdirectories under `siro/` named with their local recording ID
-   - Each recording's chunks are organized as:
-     ```
-     siro/
-     ├── LocalDataStore.json
-     └── {localRecordingId}/
-         ├── {localChunkId1}.{extension}
-         ├── {localChunkId2}.{extension}
-         └── ...
-     ```
-   - Chunks are associated with their recording through the `recordingId` field in the metadata
+### 2. Audio Chunks
+- Audio chunks are stored in subdirectories under `siro/` named with their local recording ID
+- Each recording's chunks are organized as:
+  ```
+  siro/
+  ├── LocalDataStore.json
+  └── {localRecordingId}/
+      ├── {localChunkId1}.{extension}
+      ├── {localChunkId2}.{extension}
+      └── ...
+  ```
+- Chunks are associated with their recording through the `recordingId` field in the metadata
+
+## Best Practices
+
+### 1. Error Handling
+Always wrap SDK calls in try-catch blocks:
+
+```swift
+do {
+    try await SiroSDK.initialize(withSiroToken: token)
+} catch {
+    // Handle initialization error
+    print("Initialization failed: \(error)")
+}
+```
+
+### 2. Permission Management
+Request permissions early in your app lifecycle (optional step if you handle this separately):
+
+```swift
+// Request permissions when app launches
+SiroSDK.requestRecordingPermissions()
+```
+
+### 3. Recording State Management
+Monitor recording status changes:
+
+```swift
+.onChange(of: SiroSDK.recordingStatus) { status in
+    switch status {
+    case .recording:
+        // Update UI for active recording
+    case .paused:
+        // Update UI for paused recording
+    case .stopped:
+        // Handle recording completion
+    default:
+        break
+    }
+}
+```
+
+### 4. Background Audio
+Ensure your app handles background audio properly:
+
+```swift
+// In your AppDelegate
+func applicationWillTerminate(_: UIApplication) {
+    SiroSDK.handleAppWillTerminate()
+}
+```
+
+### 5. CRM Integration
+Set CRM metadata before starting recording:
+
+```swift
+// Set CRM data before recording
+SiroSDK.crmObjectId = "contact-123"
+SiroSDK.crmObjectType = "contact"
+SiroSDK.crmTenantId = "tenant-456"
+SiroSDK.crmPlatform = "salesforce"
+
+// Start recording
+SiroSDK.startRecording()
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Initialization Fails**
+   - Ensure you have a valid authentication token
+   - Check network connectivity
+   - Verify the token has proper permissions
+
+2. **Recording Permissions Denied**
+   - Request permissions explicitly: `SiroSDK.requestRecordingPermissions()`
+   - Guide users to Settings if permissions are denied
+
+3. **Background Audio Issues**
+   - Ensure "Audio, AirPlay, and Picture in Picture" is enabled in Background Modes
+   - Call `SiroSDK.handleAppWillTerminate()` in your app delegate
+
+4. **Recordings Not Syncing**
+   - Check network connectivity
+   - Verify the user is properly authenticated
+   - Ensure recording metadata is properly set
+
+### Debug Logging
+
+Enable debug logging to troubleshoot issues:
+
+```swift
+// Set logging level
+SiroSDK.verbosityLevel = .debug
+
+// Disable toast notifications and use delegates instead
+SiroSDK.displayToast = false
+```
 
 ## Roadmap
-### Enhancements
-- Better integration documenation 
+
+### Planned Enhancements
+- Better integration documentation
 - Finer control over syncing/uploading
 - Better error handling and concrete error types
-- Userspacing files & not deleting files on logout
+- User-spacing files & not deleting files on logout
 - Observable download state for recordings and chunks
 - Better telemetry
 - Switching local .json file to DB
 
+### Known Issues
+- **Conversation Types**: Preferred conversation type is automatically used when a user token is set (In Progress)
+- **Server IDs**: Server-side IDs are not being saved correctly on device despite being returned (In Progress)
+- **Upload Timing**: Latest recordings sometimes do not upload right away; workaround is to manually sync or make another recording
+- **Duration Bug**: Completed recordings' elapsedDuration being saved as 0
 
-### Known Bugs
-* (In-Progress) Conversation types have a bug right now, preffered conversationtype is automatically used right for now if a user token is set.
-* (In-Progess) Server side id's are not being saved correctly on device despite being returned
-* Latest recordings sometimes do not upload right away, work around right now is to manually sync or make another recording
-* Comlpleted recordings' elapsedDuration being saved as 0
-  
+## Support
+
+For support and questions:
+- Check the [GitHub Issues](https://github.com/Siro-ai/SiroSDK/issues)
+- Review the example projects in the repository
+- Contact the Siro team for enterprise support
