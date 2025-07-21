@@ -7,6 +7,7 @@ struct SiroSDKExampleSwiftUI: App {
 
     init() {
         SiroSDK.setup()
+        SiroSDK.tokenDelegate = TokenDelegate()
     }
 
     var body: some Scene {
