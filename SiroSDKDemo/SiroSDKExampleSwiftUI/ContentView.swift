@@ -1,6 +1,44 @@
 import SiroSDK
 import SwiftUI
 
+// MARK: - Token Event Model
+
+struct TokenEvent: Identifiable {
+    let id = UUID()
+    let timestamp: Date
+    let type: TokenEventType
+    let message: String
+    let details: String
+    
+    enum TokenEventType {
+        case validation
+        case request
+        case success
+        
+        var color: Color {
+            switch self {
+            case .validation:
+                return .orange
+            case .request:
+                return .red
+            case .success:
+                return .green
+            }
+        }
+        
+        var icon: String {
+            switch self {
+            case .validation:
+                return "exclamationmark.triangle.fill"
+            case .request:
+                return "xmark.circle.fill"
+            case .success:
+                return "checkmark.circle.fill"
+            }
+        }
+    }
+}
+
 
 struct ActionButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -42,12 +80,15 @@ struct ContentView: View {
     @State private var crmObjectType: String = ""
     @State private var crmTenantId: String = ""
     @State private var crmPlatform: String = ""
+    
+    // Token handler event tracking
+    @State private var tokenEvents: [TokenEvent] = []
+    @State private var showingTokenEvents = false
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack {
-
                     TextField("Initialize Auth Token", text: $authToken)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.bottom)
@@ -58,6 +99,7 @@ struct ContentView: View {
                                 try await SiroSDK.initialize(withSiroToken: authToken)
                                 DispatchQueue.main.async {
                                     fetchResult = "✅ Successfully initialized!"
+                                    addTokenEvent(.success, "Token validation successful", "SDK initialized with valid token")
                                 }
                             } catch {
                                 DispatchQueue.main.async {
@@ -96,6 +138,46 @@ struct ContentView: View {
                         Text("Fetch Convo Types")
                     }
                     .buttonStyle(ActionButtonStyle())
+                    
+                    // Token Status Display
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack {
+                            Text("🔐 Token Handler Events")
+                                .font(.headline)
+                            Spacer()
+                            Button(action: {
+                                showingTokenEvents.toggle()
+                            }) {
+                                Image(systemName: showingTokenEvents ? "chevron.up" : "chevron.down")
+                                    .foregroundColor(.siroYellow)
+                            }
+                        }
+                        
+                        if showingTokenEvents {
+                            if tokenEvents.isEmpty {
+                                Text("No token events yet")
+                                    .foregroundColor(.gray)
+                                    .italic()
+                                    .padding(.vertical, 8)
+                            } else {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    ForEach(tokenEvents.prefix(5)) { event in
+                                        TokenEventView(event: event)
+                                    }
+                                    
+                                    if tokenEvents.count > 5 {
+                                        Text("... and \(tokenEvents.count - 5) more events")
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .padding()
+                    .background(Color(.systemBackground))
+                    .cornerRadius(12)
+                    .padding(.bottom)
 
                     Button(action: {
                         showingFileStructure = true
@@ -124,6 +206,7 @@ struct ContentView: View {
                             .foregroundColor(.black)
                             .padding(.top, 8)
                     }
+
                     // Recording Metadata Section
                     VStack(alignment: .leading, spacing: 12) {
                         DisclosureGroup("Recording Settings") {
@@ -218,6 +301,12 @@ struct ContentView: View {
             .task {
                 await refreshRecordings()
             }
+            .onReceive(NotificationCenter.default.publisher(for: .tokenEvent)) { notification in
+                if let tokenEvent = notification.object as? TokenEventNotification {
+                    let eventType: TokenEvent.TokenEventType = tokenEvent.type == "validation" ? .validation : .request
+                    addTokenEvent(eventType, tokenEvent.message, tokenEvent.details)
+                }
+            }
         }
     }
 
@@ -247,6 +336,64 @@ struct ContentView: View {
         } catch {
             print("Error fetching conversation types: \(error)")
         }
+    }
+    
+    // MARK: - Token Event Helpers
+    
+    private func addTokenEvent(_ type: TokenEvent.TokenEventType, _ message: String, _ details: String) {
+        let event = TokenEvent(
+            timestamp: Date(),
+            type: type,
+            message: message,
+            details: details
+        )
+        tokenEvents.insert(event, at: 0)
+        
+        // Keep only last 20 events
+        if tokenEvents.count > 20 {
+            tokenEvents = Array(tokenEvents.prefix(20))
+        }
+    }
+}
+
+// MARK: - Token Event View
+
+struct TokenEventView: View {
+    let event: TokenEvent
+    
+    private let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .medium
+        return formatter
+    }()
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Image(systemName: event.type.icon)
+                    .foregroundColor(event.type.color)
+                    .font(.caption)
+                
+                Text(event.message)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                
+                Spacer()
+                
+                Text(timeFormatter.string(from: event.timestamp))
+                    .font(.caption2)
+                    .foregroundColor(.gray)
+            }
+            
+            Text(event.details)
+                .font(.caption2)
+                .foregroundColor(.gray)
+                .padding(.leading, 16)
+        }
+        .padding(.vertical, 4)
+        .padding(.horizontal, 8)
+        .background(event.type.color.opacity(0.1))
+        .cornerRadius(6)
     }
 }
 
