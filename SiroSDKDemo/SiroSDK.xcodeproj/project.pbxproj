@@ -11,6 +11,8 @@
 		46ADBFF92A2724B400D7AF57 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADBFF82A2724B400D7AF57 /* ContentView.swift */; };
 		46ADBFFB2A2724B500D7AF57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46ADBFFA2A2724B500D7AF57 /* Assets.xcassets */; };
 		46ADBFFE2A2724B500D7AF57 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46ADBFFD2A2724B500D7AF57 /* Preview Assets.xcassets */; };
+		C907DF212E2E890B0024000B /* SiroSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C907DF202E2E890B0024000B /* SiroSDK */; };
+		C907DF242E2E8D710024000B /* SiroSDKDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907DF232E2E8D680024000B /* SiroSDKDelegate.swift */; };
 		C9299B522DC28B9900A43263 /* SiroSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C9299B512DC28B9900A43263 /* SiroSDK */; };
 		C96BE9842D80AAFE00B089E0 /* AudioVisualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BE9832D80AAF600B089E0 /* AudioVisualizerView.swift */; };
 		C99D14BF2DEF9722007858AD /* SiroSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C99D14BE2DEF9722007858AD /* SiroSDK */; };
@@ -37,6 +39,7 @@
 		46ADBFFA2A2724B500D7AF57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		46ADBFFD2A2724B500D7AF57 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		46D7E5202A2C152B0043C3BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C907DF232E2E8D680024000B /* SiroSDKDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiroSDKDelegate.swift; sourceTree = "<group>"; };
 		C96BE9832D80AAF600B089E0 /* AudioVisualizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioVisualizerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -45,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C907DF212E2E890B0024000B /* SiroSDK in Frameworks */,
 				C99D14BF2DEF9722007858AD /* SiroSDK in Frameworks */,
 				C9299B522DC28B9900A43263 /* SiroSDK in Frameworks */,
 			);
@@ -77,6 +81,7 @@
 				46ADBFF62A2724B400D7AF57 /* SiroSDKExampleSwiftUI.swift */,
 				C96BE9832D80AAF600B089E0 /* AudioVisualizerView.swift */,
 				46ADBFF82A2724B400D7AF57 /* ContentView.swift */,
+				C907DF232E2E8D680024000B /* SiroSDKDelegate.swift */,
 				46ADBFFA2A2724B500D7AF57 /* Assets.xcassets */,
 				46ADBFFC2A2724B500D7AF57 /* Preview Content */,
 			);
@@ -137,7 +142,7 @@
 			);
 			mainGroup = 46ADBFCC2A27245F00D7AF57;
 			packageReferences = (
-				C9299B502DC28B9900A43263 /* XCRemoteSwiftPackageReference "SiroSDK" */,
+				C907DF222E2E8C370024000B /* XCRemoteSwiftPackageReference "SiroSDK" */,
 			);
 			productRefGroup = 46ADBFD72A27245F00D7AF57 /* Products */;
 			projectDirPath = "";
@@ -167,6 +172,7 @@
 			files = (
 				46ADBFF92A2724B400D7AF57 /* ContentView.swift in Sources */,
 				C96BE9842D80AAFE00B089E0 /* AudioVisualizerView.swift in Sources */,
+				C907DF242E2E8D710024000B /* SiroSDKDelegate.swift in Sources */,
 				46ADBFF72A2724B400D7AF57 /* SiroSDKExampleSwiftUI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,17 +463,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C907DF222E2E8C370024000B /* XCRemoteSwiftPackageReference "SiroSDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Siro-ai/SiroSDK";
+			requirement = {
+				kind = exactVersion;
+				version = 2.0.3;
+			};
+		};
 		C9299B502DC28B9900A43263 /* XCRemoteSwiftPackageReference "SiroSDK" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Siro-ai/SiroSDK";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.3;
+				kind = exactVersion;
+				version = 2.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C907DF202E2E890B0024000B /* SiroSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C9299B502DC28B9900A43263 /* XCRemoteSwiftPackageReference "SiroSDK" */;
+			productName = SiroSDK;
+		};
 		C9299B512DC28B9900A43263 /* SiroSDK */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C9299B502DC28B9900A43263 /* XCRemoteSwiftPackageReference "SiroSDK" */;

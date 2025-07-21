@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.1 effective-5.10 (swiftlang-6.1.0.110.21 clang-1700.0.13.3)
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
 // swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SiroSDK
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
 import AVFAudio
 import AVFoundation
 import AVKit
@@ -71,6 +71,14 @@ extension SiroSDK.SiroSDKUserDelegate {
   public func didLoginUser(user _: SiroSDK.SiroUser)
   public func didLogoutUser(user _: SiroSDK.SiroUser)
   public func didFailedToLoginUser()
+}
+public protocol SiroSDKTokenDelegate : AnyObject {
+  func didFailTokenValidation(error: SiroSDK.NetworkError, context: Swift.String)
+  func didFailTokenRequest(error: SiroSDK.NetworkError, endpoint: Swift.String, statusCode: Swift.Int?)
+}
+extension SiroSDK.SiroSDKTokenDelegate {
+  public func didFailTokenValidation(error: SiroSDK.NetworkError, context: Swift.String)
+  public func didFailTokenRequest(error: SiroSDK.NetworkError, endpoint: Swift.String, statusCode: Swift.Int?)
 }
 public protocol SiroSDKRecordingDelegate {
   func didSaveRecording(localRecordingId: Swift.String, recordingLink: Foundation.URL)
@@ -159,6 +167,18 @@ public enum SKEnvironment : Swift.String {
   public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
+    get
+  }
+}
+public enum NetworkError : Foundation.LocalizedError {
+  case invalidURL
+  case noData
+  case decodingError
+  case serverError(Swift.Int)
+  case unauthorized
+  case invalidResponse(Swift.String)
+  case unknown(any Swift.Error)
+  public var errorDescription: Swift.String? {
     get
   }
 }
@@ -308,6 +328,7 @@ public struct SiroSDK {
     set
   }
   public static var userDelegate: (any SiroSDK.SiroSDKUserDelegate)?
+  public static var tokenDelegate: (any SiroSDK.SiroSDKTokenDelegate)?
   public static var recordingDelegate: (any SiroSDK.SiroSDKRecordingDelegate)? {
     get
     set(delegate)
@@ -349,6 +370,7 @@ public struct SiroSDK {
     get
     set
   }
+  public static func setConversationtype(_ conversationtype: Swift.String) -> Swift.Bool
   public static var isPrivateRecording: Swift.Bool {
     get
     set

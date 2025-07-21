@@ -16,8 +16,21 @@ Add SiroSDK to your project dependencies:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.0.2")
+    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.0.5")
 ]
+```
+
+### CocoaPods
+
+Add to your Podfile:
+
+```ruby
+pod 'SiroSDK'
+```
+
+Then run:
+```bash
+pod install
 ```
 
 ## Setup
@@ -83,6 +96,38 @@ do {
     print("SDK initialized successfully!")
 } catch {
     print("Initialization failed: \(error)")
+}
+```
+
+> **Important**: Authentication tokens expire after 16 hours. The SDK should be reinitialized with a fresh token every app session to ensure proper functionality.
+
+#### Exception Handling for Initialize
+
+The `initialize(withSiroToken:)` method now provides comprehensive exception handling for token validation and network errors:
+
+**Token Validation Errors:**
+- **Invalid JWT Format**: Throws `NetworkError.unauthorized` for malformed tokens
+- **Empty Token**: Throws `NetworkError.unauthorized` for empty strings
+- **Expired Token**: Throws `NetworkError.unauthorized` for expired JWTs
+- **Invalid Base64**: Throws `NetworkError.unauthorized` for tokens with invalid encoding
+
+**Network Errors:**
+- **401 Unauthorized**: Thrown when server rejects the token
+- **Network Connectivity**: Thrown for connection issues
+- **Server Errors**: Thrown for 5xx status codes
+- **Decoding Errors**: Thrown for invalid response data
+
+**Example Error Handling:**
+```swift
+do {
+    try await SiroSDK.initialize(withSiroToken: token)
+    print("✅ SDK initialized successfully!")
+} catch NetworkError.unauthorized {
+    print("❌ Token validation failed - check token format and expiration")
+} catch NetworkError.serverError(let statusCode) {
+    print("❌ Server error: \(statusCode)")
+} catch {
+    print("❌ Initialization failed: \(error.localizedDescription)")
 }
 ```
 
@@ -255,6 +300,31 @@ struct RecordingRow: View {
 
 ## API Reference
 
+### Error Types
+
+The SDK uses `NetworkError` enum for all network and token-related errors:
+
+```swift
+public enum NetworkError: LocalizedError {
+    case invalidURL
+    case noData
+    case decodingError
+    case serverError(Int)
+    case unauthorized
+    case invalidResponse(String)
+    case unknown(Error)
+}
+```
+
+**Error Descriptions:**
+- `invalidURL`: The request URL is malformed
+- `noData`: Server returned empty response
+- `decodingError`: Failed to parse server response
+- `serverError(Int)`: Server returned an error status code
+- `unauthorized`: Token validation failed or token is invalid
+- `invalidResponse(String)`: Server response format is unexpected
+- `unknown(Error)`: Wrapped error from underlying network layer
+
 ### Core Properties
 
 #### Recording Status
@@ -370,6 +440,73 @@ SiroSDK.audioLevelDelegate = self
 
 // User events
 SiroSDK.userDelegate = self
+
+// Token events
+SiroSDK.tokenDelegate = self
+```
+
+#### Token Delegate
+
+The `SiroSDKTokenDelegate` protocol allows you to handle token-related errors and events:
+
+```swift
+class MyTokenDelegate: SiroSDKTokenDelegate {
+    
+    // Called when token validation fails during initialization
+    func didFailTokenValidation(error: NetworkError, context: String) {
+        print("🔐 Token validation failed: \(error.localizedDescription)")
+        print("📍 Context: \(context)")
+        
+        // Handle token validation failure
+        // This could trigger a token refresh flow, show an alert, etc.
+    }
+    
+    // Called when a network request fails due to token issues
+    func didFailTokenRequest(error: NetworkError, endpoint: String, statusCode: Int?) {
+        print("🔐 Token request failed: \(error.localizedDescription)")
+        print("📍 Endpoint: \(endpoint)")
+        print("📍 Status Code: \(statusCode ?? -1)")
+        
+        // Handle token request failure
+        // This could trigger a token refresh flow, logout user, etc.
+    }
+}
+
+// Set the token delegate
+SiroSDK.tokenDelegate = MyTokenDelegate()
+```
+
+**Token Delegate Use Cases:**
+- **Token Refresh**: Automatically refresh expired tokens
+- **User Logout**: Logout user when token becomes invalid
+- **Error Reporting**: Log token errors for debugging
+- **UI Updates**: Show token status in your app's UI
+- **Retry Logic**: Implement retry mechanisms for failed requests
+
+**Example Implementation:**
+```swift
+class AppTokenDelegate: SiroSDKTokenDelegate {
+    func didFailTokenValidation(error: NetworkError, context: String) {
+        // Show alert to user
+        showAlert(title: "Authentication Error", 
+                 message: "Please log in again to continue recording.")
+        
+        // Trigger logout flow
+        SiroSDK.logout()
+    }
+    
+    func didFailTokenRequest(error: NetworkError, endpoint: String, statusCode: Int?) {
+        if statusCode == 401 {
+            // Token expired during API call
+            refreshTokenAndRetry()
+        }
+    }
+    
+    private func refreshTokenAndRetry() {
+        // Implement your token refresh logic
+        // Then reinitialize the SDK with the new token
+    }
+}
 ```
 
 ## Data Storage
@@ -413,7 +550,7 @@ do {
 ```
 
 ### 2. Permission Management
-Request permissions early in your app lifecycle (optional step if you handle this separately):
+Request permissions early in your app lifecycle:
 
 ```swift
 // Request permissions when app launches
@@ -519,3 +656,7 @@ For support and questions:
 - Check the [GitHub Issues](https://github.com/Siro-ai/SiroSDK/issues)
 - Review the example projects in the repository
 - Contact the Siro team for enterprise support
+
+## License
+
+This SDK is proprietary software. Please refer to your license agreement for terms of use.

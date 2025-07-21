@@ -17,6 +17,7 @@ struct TokenEvent: Identifiable {
         
         var color: Color {
             switch self {
+                
             case .validation:
                 return .orange
             case .request:
@@ -301,12 +302,12 @@ struct ContentView: View {
             .task {
                 await refreshRecordings()
             }
-            .onReceive(NotificationCenter.default.publisher(for: .tokenEvent)) { notification in
-                if let tokenEvent = notification.object as? TokenEventNotification {
-                    let eventType: TokenEvent.TokenEventType = tokenEvent.type == "validation" ? .validation : .request
-                    addTokenEvent(eventType, tokenEvent.message, tokenEvent.details)
-                }
-            }
+//            .onReceive(NotificationCenter.default.publisher(for: .tokenEvent)) { notification in
+//                if let tokenEvent = notification.object as? TokenEventNotification {
+//                    let eventType: TokenEvent.TokenEventType = tokenEvent.type == "validation" ? .validation : .request
+//                    addTokenEvent(eventType, tokenEvent.message, tokenEvent.details)
+//                }
+//            }
         }
     }
 
