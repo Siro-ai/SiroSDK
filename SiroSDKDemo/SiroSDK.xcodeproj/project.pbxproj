@@ -461,8 +461,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Siro-ai/SiroSDK";
 			requirement = {
-				kind = exactVersion;
-				version = 2.0.2;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
