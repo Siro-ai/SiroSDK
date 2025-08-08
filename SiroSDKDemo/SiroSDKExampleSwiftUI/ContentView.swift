@@ -67,6 +67,8 @@ struct CancelButtonStyle: ButtonStyle {
 struct ContentView: View {
     @State private var fetchResult: String = ""
     @State private var authToken: String = ""
+    @State private var offlineUserId: String = ""
+    @State private var offlineOrganizationId: String = ""
     @State private var showingActionSheet = false
     @State private var showingFileStructure = false
     @State private var showingJsonFile = false
@@ -80,6 +82,7 @@ struct ContentView: View {
     @State private var crmObjectType: String = ""
     @State private var crmTenantId: String = ""
     @State private var crmPlatform: String = ""
+    @State private var uploadModeIndex: Int = 0
     
     // Token handler event tracking
     @State private var tokenEvents: [TokenEvent] = []
@@ -108,9 +111,48 @@ struct ContentView: View {
                             }
                         }
                     }) {
-                        Text("Set Auth Token")
+                        Text("Initialize with Token")
                     }
                     .buttonStyle(ActionButtonStyle())
+
+                    // Upload Mode Toggle
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Upload Mode")
+                            .font(.subheadline)
+                        Picker("Upload Mode", selection: $uploadModeIndex) {
+                            Text("Always").tag(0)
+                            Text("Wi‑Fi").tag(1)
+                            Text("Never").tag(2)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+                    .onChange(of: uploadModeIndex) { newValue in
+                        switch newValue {
+                        case 1: SiroSDK.uploadMode = .wifi
+                        case 2: SiroSDK.uploadMode = .never
+                        default: SiroSDK.uploadMode = .always
+                        }
+                    }
+
+                    // Offline Initialization
+                    VStack(alignment: .leading, spacing: 8) {
+                        TextField("Offline User ID", text: $offlineUserId)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        TextField("Offline Organization ID", text: $offlineOrganizationId)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        Button(action: {
+                            Task {
+                                await SiroSDK.initializeOffline(userId: offlineUserId, organizationId: offlineOrganizationId)
+                                DispatchQueue.main.async {
+                                    fetchResult = "✅ Offline initialized for user: \(offlineUserId)"
+                                }
+                            }
+                        }) {
+                            Text("Initialize Offline")
+                        }
+                        .buttonStyle(ActionButtonStyle())
+                    }
+                    .padding(.vertical, 4)
 
                     Button(action: {
                         SiroSDK.logout()
@@ -136,6 +178,19 @@ struct ContentView: View {
                         }
                     }) {
                         Text("Fetch Convo Types")
+                    }
+                    .buttonStyle(ActionButtonStyle())
+                    
+                    Button(action: {
+                        Task {
+                            let uploaded = await SiroSDK.uploadPendingChunks()
+                            await refreshRecordings()
+                            DispatchQueue.main.async {
+                                fetchResult = uploaded > 0 ? "✅ Uploaded \(uploaded) chunks" : "ℹ️ No pending chunks to upload"
+                            }
+                        }
+                    }) {
+                        Text("Upload Pending Chunks")
                     }
                     .buttonStyle(ActionButtonStyle())
                     
@@ -299,6 +354,11 @@ struct ContentView: View {
             }
             .navigationTitle("Siro SDK Demo")
             .task {
+                switch SiroSDK.uploadMode {
+                case .always: uploadModeIndex = 0
+                case .wifi: uploadModeIndex = 1
+                case .never: uploadModeIndex = 2
+                }
                 await refreshRecordings()
             }
             .onReceive(NotificationCenter.default.publisher(for: .tokenEvent)) { notification in
