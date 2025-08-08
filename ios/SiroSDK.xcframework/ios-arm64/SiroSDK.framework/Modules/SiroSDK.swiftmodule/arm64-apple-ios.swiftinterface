@@ -338,6 +338,17 @@ public struct SiroSDK {
     set(delegate)
   }
   public static var verbosityLevel: LogLevel
+  public enum UploadMode {
+    case always
+    case wifi
+    case never
+    public static func == (a: UploadMode, b: UploadMode) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public static var uploadMode: UploadMode
   public static var audioLevelDelegate: (any SiroSDKAudioLevelDelegate)? {
     get
     set
@@ -351,9 +362,12 @@ public struct SiroSDK {
   public static func hide(withDelay: Swift.Bool = true)
   public static func logout()
   public static func initialize(withSiroToken token: Swift.String) async throws
+  public static func initializeOffline(userId: Swift.String, organizationId: Swift.String) async
   public static func getLocalRecordings() async throws -> [SiroRecording]
   public static func fetchUser() async throws -> SiroUser
   public static func fetchConversationTypes() async throws -> [SiroConversationType]
+  @discardableResult
+  public static func uploadPendingChunks() async -> Swift.Int
   public static func startRecording()
   public static func pauseRecording()
   public static func getCurrentRecordingLocalId() -> Swift.String?
@@ -488,6 +502,8 @@ extension SKEnvironment : Swift.Hashable {}
 extension SKEnvironment : Swift.RawRepresentable {}
 extension ChunksView : Swift.Sendable {}
 extension JsonFileView : Swift.Sendable {}
+extension UploadMode : Swift.Equatable {}
+extension UploadMode : Swift.Hashable {}
 extension Contact : Swift.Encodable {}
 extension Contact : Swift.Decodable {}
 extension Stage : Swift.Encodable {}

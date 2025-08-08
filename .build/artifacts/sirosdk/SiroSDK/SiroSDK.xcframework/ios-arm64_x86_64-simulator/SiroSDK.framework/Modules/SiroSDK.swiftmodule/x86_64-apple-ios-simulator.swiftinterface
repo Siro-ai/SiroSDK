@@ -1,0 +1,503 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.1.2 effective-5.10 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)
+// swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name SiroSDK
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -interface-compiler-version 6.1.2
+import AVFAudio
+import AVFoundation
+import AVKit
+import Accelerate
+import Combine
+import CoreGraphics
+import CoreImage
+import CoreLocation
+import DeveloperToolsSupport
+import Foundation
+import Network
+import OSLog
+import QuartzCore
+import Swift
+import SwiftUI
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_Concurrency.MainActor @preconcurrency public struct SiroSDKUI : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public func uiView() -> UIKit.UIView
+  public typealias Body = @_opaqueReturnTypeOf("$s7SiroSDK0A5SDKUIV4bodyQrvp", 0) __
+}
+@available(iOS 15.0, *)
+extension SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public func siroSDKUI() -> some SwiftUICore.View
+  
+}
+public struct LocalChunk : Swift.Codable {
+  public let path: Foundation.URL
+  public let recordingId: Swift.String
+  public let localChunkId: Swift.String
+  public let uploadURI: Foundation.URL?
+  public let isUploaded: Swift.Bool
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@_Concurrency.MainActor @preconcurrency public struct FileStructureView : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init()
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7SiroSDK17FileStructureViewV4bodyQrvp", 0) __
+}
+public enum LogLevel : Swift.Int {
+  case debug
+  case info
+  case error
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol SiroSDKAudioLevelDelegate : AnyObject {
+  func didUpdateAudioLevels(_ samples: [Swift.Float])
+}
+public protocol SiroSDKUserDelegate {
+  func didLoginUser(user: SiroUser)
+  func didLogoutUser(user: SiroUser)
+  func didFailedToLoginUser()
+}
+extension SiroSDKUserDelegate {
+  public func didLoginUser(user _: SiroUser)
+  public func didLogoutUser(user _: SiroUser)
+  public func didFailedToLoginUser()
+}
+public protocol SiroSDKTokenDelegate : AnyObject {
+  func didFailTokenValidation(error: NetworkError, context: Swift.String)
+  func didFailTokenRequest(error: NetworkError, endpoint: Swift.String, statusCode: Swift.Int?)
+}
+extension SiroSDKTokenDelegate {
+  public func didFailTokenValidation(error: NetworkError, context: Swift.String)
+  public func didFailTokenRequest(error: NetworkError, endpoint: Swift.String, statusCode: Swift.Int?)
+}
+public protocol SiroSDKRecordingDelegate {
+  func didSaveRecording(localRecordingId: Swift.String, recordingLink: Foundation.URL)
+  func didPauseRecording(localRecordingId: Swift.String)
+  func didDeleteRecording(localRecordingId: Swift.String)
+  func didStartRecording(localRecordingId: Swift.String)
+  func didStopRecording(localRecordingId: Swift.String)
+  func didUpdateD2DMode(enabled: Swift.Bool)
+}
+extension SiroSDKRecordingDelegate {
+  public func didSaveRecording(localRecordingId _: Swift.String, recordingLink _: Foundation.URL)
+  public func didPauseRecording(localRecordingId _: Swift.String)
+  public func didDeleteRecording(localRecordingId _: Swift.String)
+  public func didStartRecording(localRecordingId _: Swift.String)
+  public func didStopRecording(localRecordingId _: Swift.String)
+  public func didUpdateD2DMode(enabled _: Swift.Bool)
+}
+public protocol SiroSDKPermissionDelegate {
+  func didUpdateMicrophonePermissions(enabled: Swift.Bool)
+}
+extension SiroSDKPermissionDelegate {
+  public func didUpdateMicrophonePermissions(enabled _: Swift.Bool)
+}
+@frozen public struct AnyCodable : Swift.Codable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+extension AnyCodable : _AnyEncodable, _AnyDecodable {
+}
+extension AnyCodable : Swift.Equatable {
+  public static func == (lhs: AnyCodable, rhs: AnyCodable) -> Swift.Bool
+}
+extension AnyCodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AnyCodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension AnyCodable : Swift.ExpressibleByNilLiteral {
+}
+extension AnyCodable : Swift.ExpressibleByBooleanLiteral {
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension AnyCodable : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension AnyCodable : Swift.ExpressibleByFloatLiteral {
+  public typealias FloatLiteralType = Swift.Double
+}
+extension AnyCodable : Swift.ExpressibleByStringLiteral {
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias StringLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension AnyCodable : Swift.ExpressibleByStringInterpolation {
+  public typealias StringInterpolation = Swift.DefaultStringInterpolation
+}
+extension AnyCodable : Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = Any
+}
+extension AnyCodable : Swift.ExpressibleByDictionaryLiteral {
+  public typealias Key = Swift.AnyHashable
+  public typealias Value = Any
+}
+extension AnyCodable : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_Concurrency.MainActor @preconcurrency public struct SiroSDKButton : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(buttonRadius: CoreFoundation.CGFloat = 30)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  @_Concurrency.MainActor @preconcurrency public func uiView() -> UIKit.UIView
+  public typealias Body = @_opaqueReturnTypeOf("$s7SiroSDK0A9SDKButtonV4bodyQrvp", 0) __
+}
+public enum SKEnvironment : Swift.String {
+  case staging
+  case production
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum NetworkError : Foundation.LocalizedError {
+  case invalidURL
+  case noData
+  case decodingError
+  case serverError(Swift.Int)
+  case unauthorized
+  case invalidResponse(Swift.String)
+  case unknown(any Swift.Error)
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+@frozen public struct AnyEncodable : Swift.Encodable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+@usableFromInline
+internal protocol _AnyEncodable {
+  var value: Any { get }
+  init<T>(_ value: T?)
+}
+extension AnyEncodable : _AnyEncodable {
+}
+extension _AnyEncodable {
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+extension AnyEncodable : Swift.Equatable {
+  public static func == (lhs: AnyEncodable, rhs: AnyEncodable) -> Swift.Bool
+}
+extension AnyEncodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AnyEncodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension AnyEncodable : Swift.ExpressibleByNilLiteral {
+}
+extension AnyEncodable : Swift.ExpressibleByBooleanLiteral {
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension AnyEncodable : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension AnyEncodable : Swift.ExpressibleByFloatLiteral {
+  public typealias FloatLiteralType = Swift.Double
+}
+extension AnyEncodable : Swift.ExpressibleByStringLiteral {
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias StringLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension AnyEncodable : Swift.ExpressibleByStringInterpolation {
+  public typealias StringInterpolation = Swift.DefaultStringInterpolation
+}
+extension AnyEncodable : Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = Any
+}
+extension AnyEncodable : Swift.ExpressibleByDictionaryLiteral {
+  public typealias Key = Swift.AnyHashable
+  public typealias Value = Any
+}
+extension _AnyEncodable {
+  public init(nilLiteral _: ())
+  public init(booleanLiteral value: Swift.Bool)
+  public init(integerLiteral value: Swift.Int)
+  public init(floatLiteral value: Swift.Double)
+  public init(extendedGraphemeClusterLiteral value: Swift.String)
+  public init(stringLiteral value: Swift.String)
+  public init(arrayLiteral elements: Any...)
+  public init(dictionaryLiteral elements: (Swift.AnyHashable, Any)...)
+}
+extension AnyEncodable : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_Concurrency.MainActor @preconcurrency public struct ChunksView : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(recording: SiroRecording)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7SiroSDK10ChunksViewV4bodyQrvp", 0) __
+}
+public struct SiroOrganization : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@_Concurrency.MainActor @preconcurrency public struct JsonFileView : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init()
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  public typealias Body = @_opaqueReturnTypeOf("$s7SiroSDK12JsonFileViewV4bodyQrvp", 0) __
+}
+@available(iOS 15.0, *)
+public enum SiroSDKUIKitManager {
+  public static func embed()
+}
+public struct SiroConversationType : Swift.Codable {
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@frozen public struct AnyDecodable : Swift.Decodable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+@usableFromInline
+internal protocol _AnyDecodable {
+  var value: Any { get }
+  init<T>(_ value: T?)
+}
+extension AnyDecodable : _AnyDecodable {
+}
+extension _AnyDecodable {
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension AnyDecodable : Swift.Equatable {
+  public static func == (lhs: AnyDecodable, rhs: AnyDecodable) -> Swift.Bool
+}
+extension AnyDecodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AnyDecodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension AnyDecodable : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct SiroSDK {
+  public static var recordingStatus: SKRecorderState {
+    get
+  }
+  public static var version: Swift.String {
+    get
+  }
+  public static var initialized: Swift.Bool {
+    get
+  }
+  public static var visibile: Swift.Bool {
+    get
+  }
+  public static var displayToast: Swift.Bool {
+    get
+    set
+  }
+  public static var userDelegate: (any SiroSDKUserDelegate)?
+  public static var tokenDelegate: (any SiroSDKTokenDelegate)?
+  public static var recordingDelegate: (any SiroSDKRecordingDelegate)? {
+    get
+    set(delegate)
+  }
+  public static var permissionDelegate: (any SiroSDKPermissionDelegate)? {
+    get
+    set(delegate)
+  }
+  public static var verbosityLevel: LogLevel
+  public static var audioLevelDelegate: (any SiroSDKAudioLevelDelegate)? {
+    get
+    set
+  }
+  public static func isUserLoggedIn() -> Swift.Bool
+  public static func setup(environment: SKEnvironment = .production)
+  public static func requestRecordingPermissions()
+  public static func sendEvent(_ eventName: Swift.String, interactionData: InteractionData?)
+  public static func handleAppWillTerminate()
+  public static func show()
+  public static func hide(withDelay: Swift.Bool = true)
+  public static func logout()
+  public static func initialize(withSiroToken token: Swift.String) async throws
+  public static func getLocalRecordings() async throws -> [SiroRecording]
+  public static func fetchUser() async throws -> SiroUser
+  public static func fetchConversationTypes() async throws -> [SiroConversationType]
+  public static func startRecording()
+  public static func pauseRecording()
+  public static func getCurrentRecordingLocalId() -> Swift.String?
+  public static func recorderState() -> SKRecorderState
+  public static func stopRecording()
+  public static func deleteRecording()
+  public static var recordingTime: Foundation.TimeInterval {
+    get
+  }
+  public static var audioSamples: [Swift.Float] {
+    get
+  }
+  public static var automaticSplitEnabled: Swift.Bool {
+    get
+    set
+  }
+  public static func setConversationtype(_ conversationtype: Swift.String) -> Swift.Bool
+  public static var isPrivateRecording: Swift.Bool {
+    get
+    set
+  }
+  public static var recordingTitle: Swift.String {
+    get
+    set
+  }
+  public static var crmObjectId: Swift.String? {
+    get
+    set
+  }
+  public static var crmObjectType: Swift.String? {
+    get
+    set
+  }
+  public static var crmTenantId: Swift.String? {
+    get
+    set
+  }
+  public static var crmPlatform: Swift.String? {
+    get
+    set
+  }
+  @available(iOS 13.0, *)
+  public static var audioLevelsPublisher: Combine.AnyPublisher<[Swift.Float], Swift.Never> {
+    get
+  }
+  public static func loadResumableRecording(recordingId: Swift.String? = nil) async -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers public class RandomFilesProvider {
+  public static func testUpload() async throws -> Swift.Bool
+  @objc deinit
+}
+public struct Contact {
+  public init(firstName: Swift.String?, lastName: Swift.String?, email: Swift.String?, phoneNumber: Swift.String?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct Stage {
+  public init(id: Swift.String, name: Swift.String?, color: Swift.String?, icon: Swift.String?, won: Swift.Bool?, interacted: Swift.Bool?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct Coordinates {
+  public init(lat: Swift.Double, long: Swift.Double)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct Address {
+  public init(street: Swift.String?, city: Swift.String?, state: Swift.String?, zip: Swift.String?)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct InteractionData {
+  public init(from decoder: any Swift.Decoder) throws
+  public init(id: Swift.String, userId: Swift.String?, leadId: Swift.String?, stage: Stage?, coordinates: Coordinates?, address: Address?, note: Swift.String?, metadata: [Swift.String : AnyCodable]?, contacts: [Contact]?, leadDateCreated: Foundation.Date?)
+  public func encode(to encoder: any Swift.Encoder) throws
+}
+public enum SKRecorderState : Swift.String {
+  case paused
+  case stopped
+  case recording
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct SiroRecording : Swift.Codable {
+  public let id: Swift.String?
+  public let localId: Swift.String
+  public let dateCreated: Foundation.Date
+  public let title: Swift.String?
+  public let conversationType: Swift.String?
+  public let isAutomaticSplitEnabled: Swift.Bool
+  public let elapsedTime: Swift.Int
+  public let isPrivate: Swift.Bool
+  public let isCurrentRecording: Swift.Bool?
+  public let isUploaded: Swift.Bool
+  public let crmObjectId: Swift.String?
+  public let crmObjectType: Swift.String?
+  public let crmTenantId: Swift.String?
+  public let crmPlatform: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension SwiftUICore.Color {
+  public static let siroYellow: SwiftUICore.Color
+  public static let siroBlack: SwiftUICore.Color
+}
+public struct SiroUser : Swift.Codable {
+  public var email: Swift.String?
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public protocol RawComparable : Swift.Comparable, Swift.RawRepresentable where Self.RawValue : Swift.Comparable {
+}
+extension RawComparable {
+  public static func < (lhs: Self, rhs: Self) -> Swift.Bool
+}
+public struct LocalDataStore : Swift.Codable {
+  public let chunks: [LocalChunk]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+extension SiroSDKUI : Swift.Sendable {}
+extension FileStructureView : Swift.Sendable {}
+extension LogLevel : Swift.Equatable {}
+extension LogLevel : Swift.Hashable {}
+extension LogLevel : Swift.RawRepresentable {}
+extension SiroSDKButton : Swift.Sendable {}
+extension SKEnvironment : Swift.Equatable {}
+extension SKEnvironment : Swift.Hashable {}
+extension SKEnvironment : Swift.RawRepresentable {}
+extension ChunksView : Swift.Sendable {}
+extension JsonFileView : Swift.Sendable {}
+extension Contact : Swift.Encodable {}
+extension Contact : Swift.Decodable {}
+extension Stage : Swift.Encodable {}
+extension Stage : Swift.Decodable {}
+extension Coordinates : Swift.Encodable {}
+extension Coordinates : Swift.Decodable {}
+extension Address : Swift.Encodable {}
+extension Address : Swift.Decodable {}
+extension InteractionData : Swift.Encodable {}
+extension InteractionData : Swift.Decodable {}
+extension SKRecorderState : Swift.Equatable {}
+extension SKRecorderState : Swift.Hashable {}
+extension SKRecorderState : Swift.RawRepresentable {}

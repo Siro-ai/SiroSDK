@@ -16,7 +16,7 @@ Add SiroSDK to your project dependencies:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.0.5")
+    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.0.7")
 ]
 ```
 
@@ -98,6 +98,19 @@ do {
     print("Initialization failed: \(error)")
 }
 ```
+
+### Initialize Offline (No Token)
+
+If you don’t have a token yet, you can initialize offline with a `userId` and `organizationId`. Recordings will be saved under this user and can be uploaded later once a token is available.
+
+```swift
+await SiroSDK.initializeOffline(userId: "user_123", organizationId: "org_abc")
+```
+
+Notes:
+- Offline recordings are stored locally and associated with the provided `userId` and `organizationId`.
+- When you later call `initialize(withSiroToken:)` and the authenticated user’s id matches the offline `userId`, the SDK will upload those recordings.
+- During upload, if a recording has no conversation type, the SDK will choose one in this order: recording’s set type → user’s preferred type → first available type fetched after token init.
 
 > **Important**: Authentication tokens expire after 16 hours. The SDK should be reinitialized with a fresh token every app session to ensure proper functionality.
 
@@ -184,6 +197,20 @@ if #available(iOS 13.0, *) {
 // Stop the current recording
 SiroSDK.stopRecording()
 ```
+
+### Upload Modes (Network Policy)
+
+Control when uploads are allowed to run:
+
+```swift
+// .always: upload on any network (default)
+// .wifi:   upload only on Wi‑Fi
+// .never:  never upload automatically; manual triggers are also skipped
+SiroSDK.uploadMode = .wifi
+```
+
+- Automatic background uploads respect this policy.
+- Manual uploads via `uploadPendingChunks()` also respect this policy and will no‑op if not allowed.
 
 ## Complete Example
 
@@ -410,6 +437,9 @@ let types = try await SiroSDK.fetchConversationTypes()
 
 // Load resumable recording
 let loaded = await SiroSDK.loadResumableRecording(recordingId: "id")
+
+// Manually trigger upload of any pending chunks
+let uploadedCount = await SiroSDK.uploadPendingChunks()
 ```
 
 #### UI Control
@@ -645,8 +675,6 @@ SiroSDK.displayToast = false
 - Switching local .json file to DB
 
 ### Known Issues
-- **Conversation Types**: Preferred conversation type is automatically used when a user token is set (In Progress)
-- **Server IDs**: Server-side IDs are not being saved correctly on device despite being returned (In Progress)
 - **Upload Timing**: Latest recordings sometimes do not upload right away; workaround is to manually sync or make another recording
 - **Duration Bug**: Completed recordings' elapsedDuration being saved as 0
 

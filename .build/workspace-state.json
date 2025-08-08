@@ -1,0 +1,29 @@
+{
+  "object" : {
+    "artifacts" : [
+      {
+        "kind" : "xcframework",
+        "packageRef" : {
+          "identity" : "sirosdk",
+          "kind" : "root",
+          "location" : "/Users/matt/Workspace/SiroSDK",
+          "name" : "SiroSDK"
+        },
+        "path" : "/Users/matt/Workspace/SiroSDK/.build/artifacts/sirosdk/SiroSDK/SiroSDK.xcframework",
+        "source" : {
+          "checksum" : "39c2f9fd56758b3eb678b01a82c17c75cd7a1bfe00f795f77d47cddbc67a03c5",
+          "type" : "remote",
+          "url" : "https://github.com/Siro-ai/SiroSDK/releases/download/2.0.5/SiroSDK.xcframework.zip"
+        },
+        "targetName" : "SiroSDK"
+      }
+    ],
+    "dependencies" : [
+
+    ],
+    "prebuilts" : [
+
+    ]
+  },
+  "version" : 7
+}
