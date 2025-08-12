@@ -16,7 +16,7 @@ Add SiroSDK to your project dependencies:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.0.7")
+    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.1.2")
 ]
 ```
 
@@ -442,6 +442,23 @@ let loaded = await SiroSDK.loadResumableRecording(recordingId: "id")
 let uploadedCount = await SiroSDK.uploadPendingChunks()
 ```
 
+##### User object
+
+`SiroSDK.fetchUser()` returns a `SiroUser` that includes identifiers and the full JSON payload for maximum flexibility:
+
+- userId: Convenience alias for `uid`
+- organizationId: Organization identifier
+- raw: `[String: AnyCodable]?` The complete JSON returned by the API
+
+Example:
+
+```swift
+let user = try await SiroSDK.fetchUser()
+print(user.userId)
+print(user.organizationId)
+print(user.raw?["anyNewServerField"]) // Access full payload if needed
+```
+
 #### UI Control
 ```swift
 // Show SDK interface
@@ -675,6 +692,8 @@ SiroSDK.displayToast = false
 - Switching local .json file to DB
 
 ### Known Issues
+- **Conversation Types**: Preferred conversation type is automatically used when a user token is set (In Progress)
+- **Server IDs**: Server-side IDs are not being saved correctly on device despite being returned (In Progress)
 - **Upload Timing**: Latest recordings sometimes do not upload right away; workaround is to manually sync or make another recording
 - **Duration Bug**: Completed recordings' elapsedDuration being saved as 0
 
