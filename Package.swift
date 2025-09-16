@@ -15,8 +15,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "SiroSDK",
-            url: "https://github.com/Siro-ai/SiroSDK/releases/download/2.1.3/SiroSDK.xcframework.zip",
-            checksum: "b3c3e819764f69a9439287e0a52e25ac2a01a8b3c3392241c43c02d8cb142003"
+            url: "https://github.com/Siro-ai/SiroSDK/releases/download/2.2.0/SiroSDK.xcframework.zip",
+            checksum: "001b1a07dadc942e15c751afd37022d1f1826c70d64c86353afc5aec503e3b52"
         )
     ]
 ) 
