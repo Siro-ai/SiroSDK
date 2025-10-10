@@ -72,6 +72,7 @@ struct ContentView: View {
     @State private var showingActionSheet = false
     @State private var showingFileStructure = false
     @State private var showingJsonFile = false
+    @State private var showingLogViewer = false
     @State private var recordings: [SiroRecording] = []
     @State private var isLoadingRecordings = false
     @State private var recordingTitle: String = ""
@@ -87,6 +88,9 @@ struct ContentView: View {
     // Token handler event tracking
     @State private var tokenEvents: [TokenEvent] = []
     @State private var showingTokenEvents = false
+    
+    // Log tracking
+    @ObservedObject var logDelegate = LogDelegate.shared
 
     var body: some View {
         NavigationView {
@@ -95,6 +99,7 @@ struct ContentView: View {
                     TextField("Initialize Auth Token", text: $authToken)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.bottom)
+                        
 
                     Button(action: {
                         Task {
@@ -252,6 +257,23 @@ struct ContentView: View {
                     .buttonStyle(ActionButtonStyle())
                     .sheet(isPresented: $showingJsonFile) {
                         JsonFileView()
+                    }
+                    
+                    Button(action: {
+                        showingLogViewer = true
+                    }) {
+                        HStack {
+                            Image(systemName: "list.bullet.rectangle")
+                            Text("View SDK Logs")
+                            if logDelegate.logs.count > 0 {
+                                Text("(\(logDelegate.logs.count))")
+                                    .fontWeight(.bold)
+                            }
+                        }
+                    }
+                    .buttonStyle(ActionButtonStyle())
+                    .sheet(isPresented: $showingLogViewer) {
+                        LogViewerView()
                     }
 
                     if !fetchResult.isEmpty {

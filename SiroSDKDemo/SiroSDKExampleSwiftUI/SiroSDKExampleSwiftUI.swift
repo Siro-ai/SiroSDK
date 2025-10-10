@@ -8,6 +8,9 @@ struct SiroSDKExampleSwiftUI: App {
     init() {
         SiroSDK.setup()
         SiroSDK.tokenDelegate = TokenDelegate()
+        // Set up log delegate to receive SDK logs (using shared instance)
+        SiroSDK.logDelegate = LogDelegate.shared
+
     }
 
     var body: some Scene {
