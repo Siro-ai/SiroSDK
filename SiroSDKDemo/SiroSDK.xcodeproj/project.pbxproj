@@ -468,7 +468,7 @@
 			repositoryURL = "https://github.com/Siro-ai/SiroSDK";
 			requirement = {
 				kind = exactVersion;
-				version = 2.1.2;
+				version = 2.2.0;
 			};
 		};
 		C9299B502DC28B9900A43263 /* XCRemoteSwiftPackageReference "SiroSDK" */ = {
