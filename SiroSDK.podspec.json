@@ -1,6 +1,6 @@
 {
   "name": "SiroSDK",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "summary": "Pod for integrating Siro.ai into an iOS project",
   "homepage": "https://siro.ai",
   "license": {
@@ -11,8 +11,8 @@
     "Siro.ai": "hello@siro.ai"
   },
   "source": {
-    "http": "https://github.com/Siro-ai/SiroSDK/releases/download/2.3.4/SiroSDK.xcframework.zip",
-    "sha256": "3db695b7a38c3e6d91b163fb656bf159116ad4c48375cea1502ea0982c44d345"
+    "http": "https://github.com/Siro-ai/SiroSDK/releases/download/2.3.5/SiroSDK.xcframework.zip",
+    "sha256": "ad21d6822f4786f20d109ffe930a4409c460b0f6dc83b684ebd34bb5c0437091"
   },
   "platforms": {
     "ios": "15.0"
