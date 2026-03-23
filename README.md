@@ -16,7 +16,7 @@ Add SiroSDK to your project dependencies:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.1.2")
+    .package(url: "https://github.com/Siro-ai/SiroSDK.git", from: "2.5.1")
 ]
 ```
 

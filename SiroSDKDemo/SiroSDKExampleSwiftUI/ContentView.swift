@@ -371,6 +371,12 @@ struct ContentView: View {
                         }
                     }
                     .padding(.top)
+
+                    Text("Siro SDK \(SiroSDK.version)")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, 20)
                 }
                 .padding()
             }
