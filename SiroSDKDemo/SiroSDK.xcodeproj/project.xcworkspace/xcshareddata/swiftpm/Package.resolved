@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Siro-ai/SiroSDK",
       "state" : {
-        "revision" : "96a4c617e98b5a301f35c70a1794a3f853173b4d",
-        "version" : "2.5.1"
+        "revision" : "55e874d6f2ba9cb03ec61f68e03e70ca15d8c39e",
+        "version" : "2.5.2"
       }
     }
   ],
