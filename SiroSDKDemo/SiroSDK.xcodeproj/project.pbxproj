@@ -11,10 +11,10 @@
 		46ADBFF92A2724B400D7AF57 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ADBFF82A2724B400D7AF57 /* ContentView.swift */; };
 		46ADBFFB2A2724B500D7AF57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46ADBFFA2A2724B500D7AF57 /* Assets.xcassets */; };
 		46ADBFFE2A2724B500D7AF57 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46ADBFFD2A2724B500D7AF57 /* Preview Assets.xcassets */; };
-		C907DF212E2E890B0024000B /* SiroSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C907DF202E2E890B0024000B /* SiroSDK */; };
 		C907DF242E2E8D710024000B /* SiroSDKDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C907DF232E2E8D680024000B /* SiroSDKDelegate.swift */; };
 		C965DF062E99B243009E26B9 /* LogViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C965DF052E99B243009E26B9 /* LogViewerView.swift */; };
 		C96BE9842D80AAFE00B089E0 /* AudioVisualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96BE9832D80AAF600B089E0 /* AudioVisualizerView.swift */; };
+		C9836BA22FB504C8003E90C7 /* SiroSDK in Frameworks */ = {isa = PBXBuildFile; productRef = C9836BA12FB504C8003E90C7 /* SiroSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,7 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C907DF212E2E890B0024000B /* SiroSDK in Frameworks */,
+				C9836BA22FB504C8003E90C7 /* SiroSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,7 +113,7 @@
 			);
 			name = SiroSDKExampleSwiftUI;
 			packageProductDependencies = (
-				C907DF202E2E890B0024000B /* SiroSDK */,
+				C9836BA12FB504C8003E90C7 /* SiroSDK */,
 			);
 			productName = SiroKitExample;
 			productReference = 46ADBFF42A2724B400D7AF57 /* SiroSDKExampleSwiftUI.app */;
@@ -144,7 +144,7 @@
 			);
 			mainGroup = 46ADBFCC2A27245F00D7AF57;
 			packageReferences = (
-				C907DF222E2E8C370024000B /* XCRemoteSwiftPackageReference "SiroSDK" */,
+				C9836BA02FB504C8003E90C7 /* XCRemoteSwiftPackageReference "SiroSDK" */,
 			);
 			productRefGroup = 46ADBFD72A27245F00D7AF57 /* Products */;
 			projectDirPath = "";
@@ -458,20 +458,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C907DF222E2E8C370024000B /* XCRemoteSwiftPackageReference "SiroSDK" */ = {
+		C9836BA02FB504C8003E90C7 /* XCRemoteSwiftPackageReference "SiroSDK" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Siro-ai/SiroSDK";
 			requirement = {
-				kind = exactVersion;
-				version = 2.6.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C907DF202E2E890B0024000B /* SiroSDK */ = {
+		C9836BA12FB504C8003E90C7 /* SiroSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C907DF222E2E8C370024000B /* XCRemoteSwiftPackageReference "SiroSDK" */;
+			package = C9836BA02FB504C8003E90C7 /* XCRemoteSwiftPackageReference "SiroSDK" */;
 			productName = SiroSDK;
 		};
 /* End XCSwiftPackageProductDependency section */

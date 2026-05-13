@@ -552,9 +552,6 @@ struct RecordingView:View{
                     Text("Private: \(recording.isPrivate ? "Yes" : "No")")
                         .font(.caption)
                         .foregroundColor(.gray)
-                    Text("Auto Split: \(recording.isAutomaticSplitEnabled ? "Enabled" : "Disabled")")
-                        .font(.caption)
-                        .foregroundColor(.gray)
                     
                     if let crmObjectId = recording.crmObjectId {
                         Text("CRM Object ID: \(crmObjectId)")
