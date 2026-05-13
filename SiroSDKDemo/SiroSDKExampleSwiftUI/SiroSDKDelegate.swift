@@ -98,6 +98,19 @@ struct RecordingDelegate: SiroSDKRecordingDelegate {
         print("didSaveRecording called")
     }
 
+    /// Fires when the SDK detects a recording-time error that affects audio
+    /// capture reliability — most commonly an AVFoundation encode/write
+    /// failure caused by insufficient device storage. The in-progress
+    /// recording's most recent chunks may be empty or truncated; consumers
+    /// should typically stop the recording and surface a user-facing
+    /// message ("check available storage", etc.).
+    func didEncounterRecordingError(localRecordingId: String?, error: SiroSDKRecordingError) {
+        switch error {
+        case .encodeError(let underlying):
+            print("didEncounterRecordingError: encodeError on \(localRecordingId ?? "-") — \(underlying?.localizedDescription ?? "no underlying error")")
+        }
+    }
+
     func didUpdateD2DMode(enabled _: Bool) {
         print("didUpdateD2DMode called")
     }

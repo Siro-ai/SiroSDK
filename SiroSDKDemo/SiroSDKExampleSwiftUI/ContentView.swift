@@ -77,13 +77,13 @@ struct ContentView: View {
     @State private var isLoadingRecordings = false
     @State private var recordingTitle: String = ""
     @State private var isPrivate: Bool = false
-    @State private var isAutomaticSplitEnabled: Bool = false
     @State private var isRecording: Bool = false
     @State private var crmObjectId: String = ""
     @State private var crmObjectType: String = ""
     @State private var crmTenantId: String = ""
     @State private var crmPlatform: String = ""
     @State private var uploadModeIndex: Int = 0
+    @State private var maxDurationSeconds: String = "30"
     
     // Token handler event tracking
     @State private var tokenEvents: [TokenEvent] = []
@@ -138,6 +138,43 @@ struct ContentView: View {
                         default: SiroSDK.uploadMode = .always
                         }
                     }
+
+                    // Test Harnesses (new in 2.6.1)
+                    // - Max duration: shorten the auto-stop threshold to test
+                    //   didReachMaxRecordingDuration without recording for 8h.
+                    // - Simulate Encode Error: fires the same code path as a
+                    //   real AVAudioRecorder encode error so consumers can
+                    //   verify their didEncounterRecordingError handling
+                    //   without exhausting device storage.
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Test Harnesses")
+                            .font(.subheadline)
+                        HStack {
+                            Text("Max duration (s):")
+                                .font(.caption)
+                            TextField("seconds", text: $maxDurationSeconds)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .keyboardType(.numberPad)
+                                .frame(maxWidth: 100)
+                            Button("Apply") {
+                                if let s = TimeInterval(maxDurationSeconds), s > 0 {
+                                    SiroSDK.maxRecordingDuration = s
+                                    fetchResult = "✅ Max duration set to \(Int(s))s"
+                                } else {
+                                    fetchResult = "❌ Invalid duration"
+                                }
+                            }
+                            .buttonStyle(.bordered)
+                        }
+                        Button(action: {
+                            SiroSDK.simulateRecordingEncodeError()
+                            fetchResult = "✅ Simulated encode error fired"
+                        }) {
+                            Text("Simulate Encode Error")
+                        }
+                        .buttonStyle(ActionButtonStyle())
+                    }
+                    .padding(.vertical, 4)
 
                     // Offline Initialization
                     VStack(alignment: .leading, spacing: 8) {
@@ -292,8 +329,6 @@ struct ContentView: View {
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
                                 
                                 Toggle("Private Recording", isOn: $isPrivate)
-                                
-                                Toggle("Automatic Split", isOn: $isAutomaticSplitEnabled)
 
                                 Text("CRM Settings")
                                     .font(.subheadline)
@@ -314,7 +349,6 @@ struct ContentView: View {
                                 Button(action: {
                                     SiroSDK.recordingTitle = recordingTitle
                                     SiroSDK.isPrivateRecording = isPrivate
-                                    SiroSDK.automaticSplitEnabled = isAutomaticSplitEnabled
                                     SiroSDK.crmObjectId = crmObjectId.isEmpty ? nil : crmObjectId
                                     SiroSDK.crmObjectType = crmObjectType.isEmpty ? nil : crmObjectType
                                     SiroSDK.crmTenantId = crmTenantId.isEmpty ? nil : crmTenantId
